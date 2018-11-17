@@ -32,5 +32,11 @@ public class ApiUserController {
     	
     	return service.createUser(user);
     }
+    
+    @RequestMapping(value = "/api/users/login", method = RequestMethod.POST)
+    public BaseResponse login(@RequestBody UserBean user) {
+    	
+    	return service.login(user);
+    }
 
 }

@@ -40,6 +40,10 @@ public class ApiUserServiceImpl implements ApiUserService {
 	public BaseResponse createUser(UserBean user) {
 		return userDao.createUser(user);
 	}
+	
+	public BaseResponse login(UserBean user) {
+		return userDao.login(user);
+	}
 
 	public List<UserBean> findAllUsers() {
 		// TODO Auto-generated method stub

@@ -98,12 +98,12 @@ public class UserDaoImpl implements UserDao {
 					getSqlParameterByModel(new UserBean(user.getUserName())), new UserMapper());
 			if (list.size() > 0) {
 				res.setMesssageCode("002");
-				res.setMessage("User already exist");
+				res.setMessage("Invalid username or password !");
 			} else {
 				addUser(user);
 				res.setMesssageCode("000");
 				res.setMessage("Successful !");
-	
+
 			}
 		} catch (Exception e) {
 			res.setMesssageCode("003");
@@ -112,6 +112,30 @@ public class UserDaoImpl implements UserDao {
 
 		return res;
 
+	}
+
+	@Override
+	public BaseResponse login(UserBean user) {
+
+		String sql = "SELECT * FROM user WHERE username = :username and password = :password";
+		
+		BaseResponse res = new BaseResponse();
+		try {
+			List<UserBean> list = namedParameterJdbcTemplate.query(sql,
+					getSqlParameterByModel(user), new UserMapper());
+			if (list.size() > 0) {
+				res.setMesssageCode("000");
+				res.setMessage("Successful !");
+			} else {
+				res.setMesssageCode("002");
+				res.setMessage("User already exist");
+			}
+		} catch (Exception e) {
+			res.setMesssageCode("003");
+			res.setMessage(e.getMessage());
+		}
+
+		return res;
 	}
 
 }

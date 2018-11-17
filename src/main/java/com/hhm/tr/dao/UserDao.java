@@ -18,4 +18,6 @@ public interface UserDao {
  
  public BaseResponse createUser(UserBean user);
 
+ public BaseResponse login(UserBean user);
+
 }

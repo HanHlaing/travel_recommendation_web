@@ -16,4 +16,6 @@ public interface ApiUserService {
 	 public void deleteUser(int id);
 	 
 	 public BaseResponse createUser(UserBean user);
+	 
+	 public BaseResponse login(UserBean user);
 }
