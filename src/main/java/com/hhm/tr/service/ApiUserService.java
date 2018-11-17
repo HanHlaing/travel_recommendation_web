@@ -2,9 +2,7 @@ package com.hhm.tr.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
-import com.hhm.tr.model.User;
+import com.hhm.tr.base.BaseResponse;
 import com.hhm.tr.model.UserBean;
 
 public interface ApiUserService {
@@ -17,5 +15,5 @@ public interface ApiUserService {
 	 
 	 public void deleteUser(int id);
 	 
-	 public UserBean findUserById(int id);
+	 public BaseResponse createUser(UserBean user);
 }

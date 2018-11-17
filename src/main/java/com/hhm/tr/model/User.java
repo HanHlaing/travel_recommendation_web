@@ -39,7 +39,7 @@ public class User {
 	@Transient
 	
 	private String password;
-	@Column(name = "name")
+	@Column(name = "full_name")
 	@NotEmpty(message = "*Please provide your name! This field can not be empty!")
 	private String name;
 	

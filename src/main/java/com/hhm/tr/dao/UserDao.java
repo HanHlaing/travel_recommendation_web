@@ -2,7 +2,7 @@ package com.hhm.tr.dao;
 
 import java.util.List;
 
-import com.hhm.tr.model.User;
+import com.hhm.tr.base.BaseResponse;
 import com.hhm.tr.model.UserBean;
 
 
@@ -16,5 +16,6 @@ public interface UserDao {
  
  public void deleteUser(int id);
  
- public UserBean findUserById(int id);
+ public BaseResponse createUser(UserBean user);
+
 }

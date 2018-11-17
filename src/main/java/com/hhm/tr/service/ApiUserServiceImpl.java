@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hhm.tr.base.BaseResponse;
 import com.hhm.tr.dao.UserDao;
 import com.hhm.tr.model.UserBean;
 
@@ -20,7 +21,7 @@ public class ApiUserServiceImpl implements ApiUserService {
 		this.userDao = userDao;
 	}
 
-	public List listAllUsers() {
+	public List<UserBean> listAllUsers() {
 		return userDao.listAllUsers();
 	}
 
@@ -36,8 +37,8 @@ public class ApiUserServiceImpl implements ApiUserService {
 		userDao.deleteUser(id);
 	}
 
-	public UserBean findUserById(int id) {
-		return userDao.findUserById(id);
+	public BaseResponse createUser(UserBean user) {
+		return userDao.createUser(user);
 	}
 
 	public List<UserBean> findAllUsers() {
@@ -45,6 +46,6 @@ public class ApiUserServiceImpl implements ApiUserService {
 		return userDao.listAllUsers();
 	}
 
-	
-	
+ 
+
 }

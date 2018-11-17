@@ -11,9 +11,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import com.hhm.tr.model.User;
+import com.hhm.tr.base.BaseResponse;
 import com.hhm.tr.model.UserBean;
-
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -26,30 +25,43 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	public List<UserBean> listAllUsers() {
-		String sql = "SELECT id, email, name FROM user";
+		String sql = "SELECT id, email, username,full_name FROM user";
 
-		List list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new UserMapper());
+		List<UserBean> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new UserMapper());
 
 		return list;
 	}
 
-	private SqlParameterSource getSqlParameterByModel(User user) {
+	private SqlParameterSource getSqlParameterByModel(UserBean user) {
 		MapSqlParameterSource parameterSource = new MapSqlParameterSource();
 		if (user != null) {
-			parameterSource.addValue("id", user.getId());
 			parameterSource.addValue("email", user.getEmail());
-			parameterSource.addValue("name", user.getName());	
+			parameterSource.addValue("username", user.getUserName());
+			parameterSource.addValue("password", user.getPassword());
+			parameterSource.addValue("full_name", user.getFullName());
+			parameterSource.addValue("dob", user.getDob());
+			parameterSource.addValue("gender", user.getGender());
+			parameterSource.addValue("hobbies", user.getHobbies());
+			parameterSource.addValue("user_type", user.getUserType());
+			parameterSource.addValue("address", user.getAddress());
 		}
 		return parameterSource;
 	}
 
-	private static final class UserMapper implements RowMapper {
+	private static final class UserMapper implements RowMapper<UserBean> {
 
-		public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-			User user = new User();
+		public UserBean mapRow(ResultSet rs, int rowNum) throws SQLException {
+			UserBean user = new UserBean();
 			user.setId(rs.getInt("id"));
 			user.setEmail(rs.getString("email"));
-			user.setName(rs.getString("name"));
+			user.setUserName(rs.getString("username"));
+			user.setPassword(rs.getString("password"));
+			user.setFullName(rs.getString("full_name"));
+			user.setDob(rs.getDate("dob"));
+			user.setGender(rs.getString("gender"));
+			user.setHobbies(rs.getString("hobbies"));
+			user.setUserType(rs.getInt("user_type"));
+			user.setAddress(rs.getString("address"));
 
 			return user;
 		}
@@ -58,31 +70,48 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void addUser(UserBean user) {
-		// TODO Auto-generated method stub
-		
+		String sql = "INSERT INTO user(email,username,password, full_name,dob,gender,hobbies,user_type, address) VALUES(:email,:username,:password,:full_name,:dob,:gender,:hobbies,:user_type,:address)";
+
+		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(user));
+
 	}
 
 	@Override
 	public void updateUser(UserBean user) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void deleteUser(int id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public UserBean findUserById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public BaseResponse createUser(UserBean user) {
+
+		String sql = "SELECT * FROM user WHERE username = :username";
+		BaseResponse res = new BaseResponse();
+		try {
+			List<UserBean> list = namedParameterJdbcTemplate.query(sql,
+					getSqlParameterByModel(new UserBean(user.getUserName())), new UserMapper());
+			if (list.size() > 0) {
+				res.setMesssageCode("002");
+				res.setMessage("User already exist");
+			} else {
+				addUser(user);
+				res.setMesssageCode("000");
+				res.setMessage("Successful !");
+	
+			}
+		} catch (Exception e) {
+			res.setMesssageCode("003");
+			res.setMessage(e.getMessage());
+		}
+
+		return res;
+
 	}
-
-	 
-
- 
-	 
 
 }
