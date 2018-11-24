@@ -27,13 +27,13 @@ public class ApiUserController {
    	 return new ResponseEntity<List<UserBean>>(users, HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/api/users/registration", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/user/registration", method = RequestMethod.POST)
     public BaseResponse registerUser(@RequestBody UserBean user) {
     	
     	return service.createUser(user);
     }
     
-    @RequestMapping(value = "/api/users/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/user/login", method = RequestMethod.POST)
     public BaseResponse login(@RequestBody UserBean user) {
     	
     	return service.login(user);

@@ -98,7 +98,7 @@ public class UserDaoImpl implements UserDao {
 					getSqlParameterByModel(new UserBean(user.getUserName())), new UserMapper());
 			if (list.size() > 0) {
 				res.setMesssageCode("002");
-				res.setMessage("Invalid username or password !");
+				res.setMessage("User already exist !");
 			} else {
 				addUser(user);
 				res.setMesssageCode("000");
@@ -128,7 +128,7 @@ public class UserDaoImpl implements UserDao {
 				res.setMessage("Successful !");
 			} else {
 				res.setMesssageCode("002");
-				res.setMessage("User already exist");
+				res.setMessage("Invalid username or passord");
 			}
 		} catch (Exception e) {
 			res.setMesssageCode("003");

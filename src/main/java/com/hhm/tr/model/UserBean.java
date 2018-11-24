@@ -16,6 +16,8 @@ public class UserBean extends BaseResponse{
 	 private String hobbies;
 	 private String address;
 	 private int userType;
+	 private Date createdDate;
+	 private Date modifiedDate;
 	 
 	 
 	public UserBean() {
@@ -84,6 +86,18 @@ public class UserBean extends BaseResponse{
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 	
 	
