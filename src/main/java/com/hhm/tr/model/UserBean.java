@@ -13,6 +13,7 @@ public class UserBean extends BaseResponse{
 	 private String fullName;
 	 private Date dob;
 	 private String gender;
+	 private String mobileNumber;
 	 private String hobbies;
 	 private String address;
 	 private int userType;
@@ -98,6 +99,12 @@ public class UserBean extends BaseResponse{
 	}
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
+	}
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
 	}
 	
 	

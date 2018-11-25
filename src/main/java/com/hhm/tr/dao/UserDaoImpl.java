@@ -41,6 +41,7 @@ public class UserDaoImpl implements UserDao {
 			parameterSource.addValue("full_name", user.getFullName());
 			parameterSource.addValue("dob", user.getDob());
 			parameterSource.addValue("gender", user.getGender());
+			parameterSource.addValue("mobile_number", user.getMobileNumber());
 			parameterSource.addValue("hobbies", user.getHobbies());
 			parameterSource.addValue("user_type", user.getUserType());
 			parameterSource.addValue("address", user.getAddress());
@@ -59,6 +60,7 @@ public class UserDaoImpl implements UserDao {
 			user.setFullName(rs.getString("full_name"));
 			user.setDob(rs.getDate("dob"));
 			user.setGender(rs.getString("gender"));
+			user.setMobileNumber(rs.getString("mobile_number"));
 			user.setHobbies(rs.getString("hobbies"));
 			user.setUserType(rs.getInt("user_type"));
 			user.setAddress(rs.getString("address"));
@@ -70,7 +72,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void addUser(UserBean user) {
-		String sql = "INSERT INTO user(email,username,password, full_name,dob,gender,hobbies,user_type, address) VALUES(:email,:username,:password,:full_name,:dob,:gender,:hobbies,:user_type,:address)";
+		String sql = "INSERT INTO user(email,username,password, full_name,dob,gender,mobile_number,hobbies,user_type, address) VALUES(:email,:username,:password,:full_name,:dob,:gender,:mobile_number,:hobbies,:user_type,:address)";
 
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(user));
 
@@ -92,13 +94,14 @@ public class UserDaoImpl implements UserDao {
 	public BaseResponse createUser(UserBean user) {
 
 		String sql = "SELECT * FROM user WHERE username = :username";
-		BaseResponse res = new BaseResponse();
+		UserBean res = new UserBean();
 		try {
 			List<UserBean> list = namedParameterJdbcTemplate.query(sql,
 					getSqlParameterByModel(new UserBean(user.getUserName())), new UserMapper());
 			if (list.size() > 0) {
-				res.setMesssageCode("002");
-				res.setMessage("User already exist !");
+				list.get(0).setMesssageCode("002");
+				list.get(0).setMessage("User already exist !");
+				res=list.get(0);
 			} else {
 				addUser(user);
 				res.setMesssageCode("000");
@@ -115,20 +118,22 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public BaseResponse login(UserBean user) {
+	public UserBean login(UserBean user) {
 
 		String sql = "SELECT * FROM user WHERE username = :username and password = :password";
 		
-		BaseResponse res = new BaseResponse();
+		UserBean res = new UserBean();
 		try {
 			List<UserBean> list = namedParameterJdbcTemplate.query(sql,
 					getSqlParameterByModel(user), new UserMapper());
 			if (list.size() > 0) {
-				res.setMesssageCode("000");
-				res.setMessage("Successful !");
+				
+				list.get(0).setMesssageCode("000");
+				list.get(0).setMessage("Successful !");
+				return list.get(0);
 			} else {
 				res.setMesssageCode("002");
-				res.setMessage("Invalid username or passord");
+				res.setMessage("Invalid username or password");
 			}
 		} catch (Exception e) {
 			res.setMesssageCode("003");
