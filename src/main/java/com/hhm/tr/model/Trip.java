@@ -9,6 +9,7 @@ public class Trip {
 	private String tripName;
 	private String tripDetails;
 	private int totalAmount;
+	private int tripPrice;
 	private int discountPassengerLimit;
 	private int discountPercent;
 	private String departFrom;
@@ -25,7 +26,9 @@ public class Trip {
 	private int totalViews;
 	private Date createdDate;
 	private Date modifiedDate;
-	
+	private boolean haveBreakfast;
+	private boolean haveLunch;
+	private boolean haveDinner;
 	public Trip() {
 		super();
 	}
@@ -65,6 +68,18 @@ public class Trip {
 		this.driveOrFly = driveOrFly;
 		this.totalViews = totalViews;
 	}
+	
+	
+	public int getTripPrice() {
+		return tripPrice;
+	}
+
+
+	public void setTripPrice(int tripPrice) {
+		this.tripPrice = tripPrice;
+	}
+
+
 	public int getTripId() {
 		return tripId;
 	}
@@ -192,6 +207,36 @@ public class Trip {
 	}
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
+	}
+
+
+	public boolean isHaveBreakfast() {
+		return haveBreakfast;
+	}
+
+
+	public void setHaveBreakfast(boolean haveBreakfast) {
+		this.haveBreakfast = haveBreakfast;
+	}
+
+
+	public boolean isHaveLunch() {
+		return haveLunch;
+	}
+
+
+	public void setHaveLunch(boolean haveLunch) {
+		this.haveLunch = haveLunch;
+	}
+
+
+	public boolean isHaveDinner() {
+		return haveDinner;
+	}
+
+
+	public void setHaveDinner(boolean haveDinner) {
+		this.haveDinner = haveDinner;
 	}
 	
 	

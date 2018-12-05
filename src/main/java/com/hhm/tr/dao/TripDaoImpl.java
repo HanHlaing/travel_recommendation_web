@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import com.hhm.tr.base.BaseResponse;
+import com.hhm.tr.model.RecommendTrip;
 import com.hhm.tr.model.Trip;
 
 @Repository
@@ -30,8 +31,11 @@ public class TripDaoImpl implements TripDao{
 			parameterSource.addValue("id", trip.getTripId());
 			parameterSource.addValue("user_id", trip.getUserId());
 			parameterSource.addValue("trip_name", trip.getTripName());
+			parameterSource.addValue("breakfast", trip.isHaveBreakfast()?1:0);
+			parameterSource.addValue("lunch", trip.isHaveLunch()?1:0);
+			parameterSource.addValue("dinner", trip.isHaveDinner()?1:0);
 			parameterSource.addValue("trip_details",trip.getTripDetails());
-			parameterSource.addValue("total_amount", trip.getTotalAmount());
+			parameterSource.addValue("trip_price", trip.getTripPrice());
 			parameterSource.addValue("discount_passenger_limit", trip.getDiscountPassengerLimit());
 			parameterSource.addValue("discount_percent", trip.getDiscountPercent());
 			parameterSource.addValue("depart_from",trip.getDepartFrom());
@@ -46,8 +50,6 @@ public class TripDaoImpl implements TripDao{
 			parameterSource.addValue("flight_car_cost", trip.getFlightCarCost());
 			parameterSource.addValue("drive_or_fly", trip.getDriveOrFly());
 			parameterSource.addValue("total_views", trip.getTotalViews());
-			parameterSource.addValue("created_date", trip.getCreatedDate());
-			parameterSource.addValue("modified_date", trip.getModifiedDate());
 		}
 		return parameterSource;
 	}
@@ -59,8 +61,11 @@ public class TripDaoImpl implements TripDao{
 			trip.setTripId(rs.getInt("id"));
 			trip.setUserId(rs.getInt("user_id"));
 			trip.setTripName(rs.getString("trip_name"));
+			trip.setHaveBreakfast(rs.getInt("breakfast")==0?false:true);
+			trip.setHaveLunch(rs.getInt("lunch")==0?false:true);
+			trip.setHaveDinner(rs.getInt("dinner")==0?false:true);
 			trip.setTripDetails(rs.getString("trip_details"));
-			trip.setTotalAmount(rs.getInt("total_amount"));
+			trip.setTripPrice(rs.getInt("trip_price"));
 			trip.setDiscountPassengerLimit(rs.getInt("discount_passenger_limit"));
 			trip.setDiscountPercent(rs.getInt("discount_percent"));
 			trip.setDepartFrom(rs.getString("depart_from"));
@@ -83,12 +88,28 @@ public class TripDaoImpl implements TripDao{
 	}
 	
 	@Override
-	public List<Trip> getAllTrips() {
-		String sql = "SELECT * FROM trip";
-
-		List<Trip> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new TripMapper());
-
-		return list;
+	public RecommendTrip getAllTrips() {
+		
+		RecommendTrip trips=new RecommendTrip();
+		String sql = "SELECT * FROM trip order by total_views desc";
+		
+		String sql1 = "SELECT * FROM trip order by created_date desc";
+		try {
+		List<Trip> popularList = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new TripMapper());
+		
+		List<Trip> recentList = namedParameterJdbcTemplate.query(sql1, getSqlParameterByModel(null), new TripMapper());
+		
+		trips.setPopularList(popularList);
+		trips.setRecommendList(recentList);
+		trips.setRecentList(recentList);
+		trips.setMesssageCode("000");
+		trips.setMessage("You are welcome!");
+		} catch (Exception e) {
+			System.out.println("Error in create trip => "+e.getMessage());
+			trips.setMesssageCode("003");
+			trips.setMessage(e.getMessage());
+		}
+		return trips;
 	}
 
 
@@ -110,6 +131,7 @@ public class TripDaoImpl implements TripDao{
 
 			}
 		} catch (Exception e) {
+			System.out.println("Error in create trip => "+e.getMessage());
 			res.setMesssageCode("003");
 			res.setMessage(e.getMessage());
 		}
@@ -119,8 +141,8 @@ public class TripDaoImpl implements TripDao{
 	}
 	
 	public void insertTrip(Trip trip) {
-		String sql = "INSERT INTO trip(user_id, trip_name, trip_details, total_amount, discount_passenger_limit, discount_percent, depart_from, depart_date, return_date, depart_time, night_stay, total_seats, available, cost_per_day, hotel_price, flight_car_cost, drive_or_fly, total_views)"+
-				" VALUES(:user_id,: trip_name,: trip_details,: total_amount,: discount_passenger_limit,: discount_percent,: depart_from,: depart_date,: return_date,: depart_time,: night_stay,: total_seats,: available,: cost_per_day,: hotel_price,: flight_car_cost,: drive_or_fly,: total_views)";
+		String sql = "INSERT INTO trip(user_id, trip_name, trip_details, trip_price, discount_passenger_limit, discount_percent, depart_from, depart_date, return_date, depart_time, night_stay,breakfast,lunch,dinner, total_seats, available, cost_per_day, hotel_price, flight_car_cost, drive_or_fly, total_views)"+
+				" VALUES(:user_id,:trip_name,:trip_details,:trip_price,:discount_passenger_limit,:discount_percent,:depart_from,:depart_date,:return_date,:depart_time,:night_stay,:breakfast,:lunch,:dinner,:total_seats,:available,:cost_per_day,:hotel_price,:flight_car_cost,:drive_or_fly,:total_views)";
 
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(trip));
 	
@@ -129,8 +151,8 @@ public class TripDaoImpl implements TripDao{
 	@Override
 	public BaseResponse updateTrip(Trip trip) {
 		String sql = "UPDATE trip SET "+
-				" user_id=:user_id,trip_name=: trip_name,trip_details=: trip_details,total_amount=: total_amount,discount_passenger_limit=: discount_passenger_limit,discount_percent=: discount_percent,depart_from=: depart_from,"+
-				"depart_date=: depart_date,return_date=: return_date,depart_time=: depart_time,night_stay=: night_stay,total_seats=: total_seats,available=: available,cost_per_day=: cost_per_day,hotel_price=: hotel_price,flight_car_cost=: flight_car_cost,drive_or_fly=: drive_or_fly,total_views=: total_views "+
+				" user_id=:user_id,trip_name=:trip_name,trip_details=:trip_details,trip_price=:trip_price,discount_passenger_limit=:discount_passenger_limit,discount_percent=:discount_percent,depart_from=:depart_from,"+
+				"depart_date=:depart_date,return_date=:return_date,depart_time=:depart_time,night_stay=:night_stay,breakfast=:breakfast,lunch=:lunch,dinner=:dinner,total_seats=:total_seats,available=:available,cost_per_day=:cost_per_day,hotel_price=:hotel_price,flight_car_cost=:flight_car_cost,drive_or_fly=:drive_or_fly,total_views=:total_views "+
 				" WHERE id = :id";
 		BaseResponse res = new BaseResponse();
 		int response =namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(trip));

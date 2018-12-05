@@ -1,13 +1,12 @@
 package com.hhm.tr.service;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.hhm.tr.base.BaseResponse;
 import com.hhm.tr.dao.TripDao;
+import com.hhm.tr.model.RecommendTrip;
 import com.hhm.tr.model.Trip;
 
 @Service("tripService")
@@ -29,7 +28,7 @@ public class ApiTripServiceImpl implements ApiTripService {
 	}
 
 	@Override
-	public List<Trip> getAllTrips() {
+	public RecommendTrip getAllTrips() {
 		// TODO Auto-generated method stub
 		return tripDao.getAllTrips();
 	}

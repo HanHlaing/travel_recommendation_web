@@ -1,6 +1,5 @@
 package com.hhm.tr.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.hhm.tr.base.BaseResponse;
+import com.hhm.tr.model.RecommendTrip;
 import com.hhm.tr.model.Trip;
 import com.hhm.tr.service.ApiTripService;
 
@@ -21,9 +21,9 @@ public class ApiTripController {
 	ApiTripService tripService;
 
 	@RequestMapping(value = "/api/trips", method = RequestMethod.GET)
-    public ResponseEntity<List<Trip>> getAllTrips() {
-    	List<Trip> trips = tripService.getAllTrips(); 	
-   	 return new ResponseEntity<List<Trip>>(trips, HttpStatus.OK);
+    public ResponseEntity<RecommendTrip> getAllTrips() {
+		RecommendTrip trips = tripService.getAllTrips(); 	
+   	 return new ResponseEntity<RecommendTrip>(trips, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/api/trip/create", method = RequestMethod.POST)
