@@ -2,6 +2,7 @@ package com.hhm.tr.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,8 @@ public class TripDaoImpl implements TripDao{
 			parameterSource.addValue("flight_car_cost", trip.getFlightCarCost());
 			parameterSource.addValue("drive_or_fly", trip.getDriveOrFly());
 			parameterSource.addValue("total_views", trip.getTotalViews());
+			parameterSource.addValue("created_date",new Date());
+			//parameterSource.addValue("modified_date",new Date());
 		}
 		return parameterSource;
 	}
@@ -80,7 +83,7 @@ public class TripDaoImpl implements TripDao{
 			trip.setDriveOrFly(rs.getInt("drive_or_fly"));
 			trip.setTotalViews(rs.getInt("total_views"));
 			trip.setCreatedDate(rs.getDate("created_date"));
-			trip.setModifiedDate(rs.getDate("modified_date"));
+			//trip.setModifiedDate(rs.getDate("modified_date"));
 
 			return trip;
 		}
@@ -141,8 +144,8 @@ public class TripDaoImpl implements TripDao{
 	}
 	
 	public void insertTrip(Trip trip) {
-		String sql = "INSERT INTO trip(user_id, trip_name, trip_details, trip_price, discount_passenger_limit, discount_percent, depart_from, depart_date, return_date, depart_time, night_stay,breakfast,lunch,dinner, total_seats, available, cost_per_day, hotel_price, flight_car_cost, drive_or_fly, total_views)"+
-				" VALUES(:user_id,:trip_name,:trip_details,:trip_price,:discount_passenger_limit,:discount_percent,:depart_from,:depart_date,:return_date,:depart_time,:night_stay,:breakfast,:lunch,:dinner,:total_seats,:available,:cost_per_day,:hotel_price,:flight_car_cost,:drive_or_fly,:total_views)";
+		String sql = "INSERT INTO trip(user_id, trip_name, trip_details, trip_price, discount_passenger_limit, discount_percent, depart_from, depart_date, return_date, depart_time, night_stay,breakfast,lunch,dinner, total_seats, available, cost_per_day, hotel_price, flight_car_cost, drive_or_fly, total_views,created_date)"+
+				" VALUES(:user_id,:trip_name,:trip_details,:trip_price,:discount_passenger_limit,:discount_percent,:depart_from,:depart_date,:return_date,:depart_time,:night_stay,:breakfast,:lunch,:dinner,:total_seats,:available,:cost_per_day,:hotel_price,:flight_car_cost,:drive_or_fly,:total_views,:created_date)";
 
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(trip));
 	
