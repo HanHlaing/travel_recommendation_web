@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.hhm.tr.base.BaseResponse;
+import com.hhm.tr.model.Tours;
 import com.hhm.tr.model.UserBean;
 
 @Repository
@@ -25,11 +26,28 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	public List<UserBean> listAllUsers() {
-		String sql = "SELECT id, email, username,full_name FROM user";
+		String sql = "SELECT id, email, username,full_name FROM user where user_type=1";
 
 		List<UserBean> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new UserMapper());
 
 		return list;
+	}
+
+	@Override
+	public Tours listAllTours() {
+
+		String sql = "SELECT * FROM user where user_type=2";
+		Tours res = new Tours();
+		try {
+			List<UserBean> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new UserMapper());
+			res.setMesssageCode("000");
+			res.setMessage("Successful !");
+			res.setTourList(list);
+		} catch (Exception e) {
+			res.setMesssageCode("003");
+			res.setMessage(e.getMessage());
+		}
+		return res;
 	}
 
 	private SqlParameterSource getSqlParameterByModel(UserBean user) {
@@ -37,7 +55,7 @@ public class UserDaoImpl implements UserDao {
 		if (user != null) {
 			parameterSource.addValue("email", user.getEmail());
 			parameterSource.addValue("username", user.getUserName());
-			parameterSource.addValue("password", user.getPassword());
+			// parameterSource.addValue("password", user.getPassword());
 			parameterSource.addValue("full_name", user.getFullName());
 			parameterSource.addValue("dob", user.getDob());
 			parameterSource.addValue("gender", user.getGender());
@@ -45,6 +63,8 @@ public class UserDaoImpl implements UserDao {
 			parameterSource.addValue("hobbies", user.getHobbies());
 			parameterSource.addValue("user_type", user.getUserType());
 			parameterSource.addValue("address", user.getAddress());
+			parameterSource.addValue("rating", user.getRating());
+			parameterSource.addValue("review_count", user.getReviewCount());
 		}
 		return parameterSource;
 	}
@@ -56,7 +76,7 @@ public class UserDaoImpl implements UserDao {
 			user.setId(rs.getInt("id"));
 			user.setEmail(rs.getString("email"));
 			user.setUserName(rs.getString("username"));
-			user.setPassword(rs.getString("password"));
+			// user.setPassword(rs.getString("password"));
 			user.setFullName(rs.getString("full_name"));
 			user.setDob(rs.getDate("dob"));
 			user.setGender(rs.getString("gender"));
@@ -64,6 +84,8 @@ public class UserDaoImpl implements UserDao {
 			user.setHobbies(rs.getString("hobbies"));
 			user.setUserType(rs.getInt("user_type"));
 			user.setAddress(rs.getString("address"));
+			user.setRating(rs.getDouble("rating"));
+			user.setReviewCount(rs.getInt("review_count"));
 
 			return user;
 		}
@@ -101,7 +123,7 @@ public class UserDaoImpl implements UserDao {
 			if (list.size() > 0) {
 				list.get(0).setMesssageCode("002");
 				list.get(0).setMessage("User already exist !");
-				res=list.get(0);
+				res = list.get(0);
 			} else {
 				addUser(user);
 				res.setMesssageCode("000");
@@ -121,13 +143,12 @@ public class UserDaoImpl implements UserDao {
 	public UserBean login(UserBean user) {
 
 		String sql = "SELECT * FROM user WHERE username = :username and password = :password";
-		
+
 		UserBean res = new UserBean();
 		try {
-			List<UserBean> list = namedParameterJdbcTemplate.query(sql,
-					getSqlParameterByModel(user), new UserMapper());
+			List<UserBean> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(user), new UserMapper());
 			if (list.size() > 0) {
-				
+
 				list.get(0).setMesssageCode("000");
 				list.get(0).setMessage("Successful !");
 				return list.get(0);

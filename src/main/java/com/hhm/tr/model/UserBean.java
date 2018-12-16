@@ -17,6 +17,8 @@ public class UserBean extends BaseResponse{
 	 private String hobbies;
 	 private String address;
 	 private int userType;
+	 private double rating;
+	 private int reviewCount;
 	 private Date createdDate;
 	 private Date modifiedDate;
 	 
@@ -105,6 +107,20 @@ public class UserBean extends BaseResponse{
 	}
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
+	}
+	 
+	
+	public double getRating() {
+		return rating;
+	}
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+	public int getReviewCount() {
+		return reviewCount;
+	}
+	public void setReviewCount(int reviewCount) {
+		this.reviewCount = reviewCount;
 	}
 	
 	

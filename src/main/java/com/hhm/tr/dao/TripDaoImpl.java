@@ -50,6 +50,7 @@ public class TripDaoImpl implements TripDao{
 			parameterSource.addValue("hotel_price", trip.getHotelPrice());
 			parameterSource.addValue("flight_car_cost", trip.getFlightCarCost());
 			parameterSource.addValue("drive_or_fly", trip.getDriveOrFly());
+			parameterSource.addValue("rating", trip.getRating());
 			parameterSource.addValue("total_views", trip.getTotalViews());
 			parameterSource.addValue("created_date",new Date());
 			//parameterSource.addValue("modified_date",new Date());
@@ -81,6 +82,7 @@ public class TripDaoImpl implements TripDao{
 			trip.setHotelPrice(rs.getInt("hotel_price"));
 			trip.setFlightCarCost(rs.getInt("flight_car_cost"));
 			trip.setDriveOrFly(rs.getInt("drive_or_fly"));
+			trip.setRating(rs.getDouble("rating"));
 			trip.setTotalViews(rs.getInt("total_views"));
 			trip.setCreatedDate(rs.getDate("created_date"));
 			//trip.setModifiedDate(rs.getDate("modified_date"));
@@ -94,9 +96,9 @@ public class TripDaoImpl implements TripDao{
 	public RecommendTrip getAllTrips() {
 		
 		RecommendTrip trips=new RecommendTrip();
-		String sql = "SELECT * FROM trip order by total_views desc";
+		String sql = "SELECT * FROM trip order by rating desc LIMIT 10";
 		
-		String sql1 = "SELECT * FROM trip order by created_date desc";
+		String sql1 = "SELECT * FROM trip order by created_date desc LIMIT 10";
 		try {
 		List<Trip> popularList = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new TripMapper());
 		

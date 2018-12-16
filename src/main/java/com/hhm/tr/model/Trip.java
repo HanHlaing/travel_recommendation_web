@@ -23,6 +23,7 @@ public class Trip {
 	private int hotelPrice;
 	private int flightCarCost;
 	private int driveOrFly;
+	private double rating;
 	private int totalViews;
 	private Date createdDate;
 	private Date modifiedDate;
@@ -238,6 +239,17 @@ public class Trip {
 	public void setHaveDinner(boolean haveDinner) {
 		this.haveDinner = haveDinner;
 	}
+
+
+	public double getRating() {
+		return rating;
+	}
+
+
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+	
 	
 	
 

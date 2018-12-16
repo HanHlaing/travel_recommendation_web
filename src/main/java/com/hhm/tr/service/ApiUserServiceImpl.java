@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hhm.tr.base.BaseResponse;
 import com.hhm.tr.dao.UserDao;
+import com.hhm.tr.model.Tours;
 import com.hhm.tr.model.UserBean;
 
 @Service("service")
@@ -48,6 +49,12 @@ public class ApiUserServiceImpl implements ApiUserService {
 	public List<UserBean> findAllUsers() {
 		// TODO Auto-generated method stub
 		return userDao.listAllUsers();
+	}
+
+	@Override
+	public Tours findAllTours() {
+		// TODO Auto-generated method stub
+		return userDao.listAllTours();
 	}
 
  

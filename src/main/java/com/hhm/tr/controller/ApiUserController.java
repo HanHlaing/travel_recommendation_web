@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hhm.tr.base.BaseResponse;
+import com.hhm.tr.model.Tours;
 import com.hhm.tr.model.UserBean;
 import com.hhm.tr.service.ApiUserService;
 
@@ -25,6 +26,13 @@ public class ApiUserController {
     	List<UserBean> users = service.findAllUsers();
     	
    	 return new ResponseEntity<List<UserBean>>(users, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/api/user/tours", method = RequestMethod.POST)
+    public ResponseEntity<Tours> listAllTours() {
+    	Tours users = service.findAllTours();
+    	
+   	 return new ResponseEntity<Tours>(users, HttpStatus.OK);
     }
     
     @RequestMapping(value = "/api/user/registration", method = RequestMethod.POST)
