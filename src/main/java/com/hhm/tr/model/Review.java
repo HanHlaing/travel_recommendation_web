@@ -9,6 +9,7 @@ public class Review {
     int rateBy;
     int rating;
     int row;
+    double totalRating;
     String comment;
     String rateByName;
     int type;
@@ -98,6 +99,12 @@ public class Review {
 	}
 	public void setRow(int row) {
 		this.row = row;
+	}
+	public double getTotalRating() {
+		return totalRating;
+	}
+	public void setTotalRating(double totalRating) {
+		this.totalRating = totalRating;
 	}
  
     

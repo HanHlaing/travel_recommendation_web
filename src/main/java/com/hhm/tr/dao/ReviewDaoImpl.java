@@ -63,7 +63,7 @@ public class ReviewDaoImpl implements ReviewDao {
 
 		public Review mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Review review = new Review();
-			review.setRating(rs.getInt("rating"));
+			review.setTotalRating(rs.getDouble("rating"));
 			review.setRow(rs.getInt("row"));
 	
 			return review;
@@ -76,7 +76,7 @@ public class ReviewDaoImpl implements ReviewDao {
 		MapSqlParameterSource parameterSource = new MapSqlParameterSource();
 		if (review != null) {
 			parameterSource.addValue("id", tripId);
-			parameterSource.addValue("rating", review.getRating());
+			parameterSource.addValue("rating", review.getTotalRating());
 			parameterSource.addValue("total_views", review.getRow());	
 
 		}
@@ -128,6 +128,7 @@ public class ReviewDaoImpl implements ReviewDao {
 			BaseResponse res = new BaseResponse();
 			int response = namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(review));
 			if (response > 0) {
+				triggerTrip(review);
 				res.setMesssageCode("000");
 				res.setMessage("Post review successful!");
 			} else
@@ -149,7 +150,7 @@ public class ReviewDaoImpl implements ReviewDao {
 	}
 	
 	public void triggerTrip(Review review) {
-		String sql = "SELECT count(*) as row,SUM(rating) as rating FROM review  WHERE rate_to = :rate_to and type=0";
+		String sql = "SELECT count(*) as row,SUM(rating)/count(*) as rating FROM review  WHERE rate_to = :rate_to and type=0";
 
 		List<Review> list = namedParameterJdbcTemplate.query(sql,
 				getSqlParameterByModel(new Review(review.getRateTo(),review.getRateBy())), new ReviewTripMapper());
