@@ -55,7 +55,7 @@ public class UserDaoImpl implements UserDao {
 		if (user != null) {
 			parameterSource.addValue("email", user.getEmail());
 			parameterSource.addValue("username", user.getUserName());
-			// parameterSource.addValue("password", user.getPassword());
+			parameterSource.addValue("password", user.getPassword());
 			parameterSource.addValue("full_name", user.getFullName());
 			parameterSource.addValue("dob", user.getDob());
 			parameterSource.addValue("gender", user.getGender());
@@ -76,7 +76,7 @@ public class UserDaoImpl implements UserDao {
 			user.setId(rs.getInt("id"));
 			user.setEmail(rs.getString("email"));
 			user.setUserName(rs.getString("username"));
-			// user.setPassword(rs.getString("password"));
+			user.setPassword(rs.getString("password"));
 			user.setFullName(rs.getString("full_name"));
 			user.setDob(rs.getDate("dob"));
 			user.setGender(rs.getString("gender"));

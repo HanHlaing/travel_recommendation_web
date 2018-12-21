@@ -8,7 +8,9 @@ public class Review {
     int rateTo;
     int rateBy;
     int rating;
+    int row;
     String comment;
+    String rateByName;
     int type;
     Date createdDate;
     Date modifiedDate;  
@@ -17,10 +19,17 @@ public class Review {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Review(int reviewId) {
+	public Review(int rateTo) {
 		super();
-		this.reviewId = reviewId;
+		this.rateTo = rateTo;
 	}
+	
+	public Review(int rateTo,int rateBy) {
+		super();
+		this.rateBy = rateBy;
+		this.rateTo=rateTo;
+	}
+	
 	public Review(int rateTo, int rateBy, int rating, String comment,int type) {
 		super();
 		this.rateTo = rateTo;
@@ -77,6 +86,19 @@ public class Review {
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
-    
+	public String getRateByName() {
+		return rateByName;
+	}
+
+	public void setRateByName(String rateByName) {
+		this.rateByName = rateByName;
+	}
+	public int getRow() {
+		return row;
+	}
+	public void setRow(int row) {
+		this.row = row;
+	}
+ 
     
 }

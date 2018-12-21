@@ -9,7 +9,9 @@ public interface ApiReviewService {
 
 	BaseResponse postReview(Review review);
 	
-	List<Review> getAllReviewById(int id);
+	Review getAllReviewById(int rateTo,int rateBy);
+	
+	List<Review> getAllReviews(int id);
 
 	BaseResponse deleteReview(int id);
 

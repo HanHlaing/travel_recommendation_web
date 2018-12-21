@@ -10,8 +10,10 @@ public interface ReviewDao {
 
 	BaseResponse postReview(Review review);
 	
-	List<Review> getAllReviewById(int id);
+	Review getAllReviewById(int rateTo,int rateBy);
 
 	BaseResponse deleteReview(int id);
+
+	List<Review> getAllReviews(int id);
 
 }
