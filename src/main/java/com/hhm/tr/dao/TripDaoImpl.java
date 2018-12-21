@@ -36,6 +36,7 @@ public class TripDaoImpl implements TripDao{
 			parameterSource.addValue("lunch", trip.isHaveLunch()?1:0);
 			parameterSource.addValue("dinner", trip.isHaveDinner()?1:0);
 			parameterSource.addValue("trip_details",trip.getTripDetails());
+			parameterSource.addValue("thing_todo",trip.getThingTodo());
 			parameterSource.addValue("trip_price", trip.getTripPrice());
 			parameterSource.addValue("discount_passenger_limit", trip.getDiscountPassengerLimit());
 			parameterSource.addValue("discount_percent", trip.getDiscountPercent());
@@ -53,7 +54,7 @@ public class TripDaoImpl implements TripDao{
 			parameterSource.addValue("rating", trip.getRating());
 			parameterSource.addValue("total_views", trip.getTotalViews());
 			parameterSource.addValue("created_date",new Date());
-			//parameterSource.addValue("modified_date",new Date());
+			parameterSource.addValue("modified_date",new Date());
 		}
 		return parameterSource;
 	}
@@ -69,6 +70,7 @@ public class TripDaoImpl implements TripDao{
 			trip.setHaveLunch(rs.getInt("lunch")==0?false:true);
 			trip.setHaveDinner(rs.getInt("dinner")==0?false:true);
 			trip.setTripDetails(rs.getString("trip_details"));
+			trip.setThingTodo(rs.getString("thing_todo"));
 			trip.setTripPrice(rs.getInt("trip_price"));
 			trip.setDiscountPassengerLimit(rs.getInt("discount_passenger_limit"));
 			trip.setDiscountPercent(rs.getInt("discount_percent"));
@@ -85,7 +87,7 @@ public class TripDaoImpl implements TripDao{
 			trip.setRating(rs.getDouble("rating"));
 			trip.setTotalViews(rs.getInt("total_views"));
 			trip.setCreatedDate(rs.getDate("created_date"));
-			//trip.setModifiedDate(rs.getDate("modified_date"));
+			trip.setModifiedDate(rs.getDate("modified_date"));
 
 			return trip;
 		}
@@ -146,8 +148,8 @@ public class TripDaoImpl implements TripDao{
 	}
 	
 	public void insertTrip(Trip trip) {
-		String sql = "INSERT INTO trip(user_id, trip_name, trip_details, trip_price, discount_passenger_limit, discount_percent, depart_from, depart_date, return_date, depart_time, night_stay,breakfast,lunch,dinner, total_seats, available, cost_per_day, hotel_price, flight_car_cost, drive_or_fly, total_views,created_date)"+
-				" VALUES(:user_id,:trip_name,:trip_details,:trip_price,:discount_passenger_limit,:discount_percent,:depart_from,:depart_date,:return_date,:depart_time,:night_stay,:breakfast,:lunch,:dinner,:total_seats,:available,:cost_per_day,:hotel_price,:flight_car_cost,:drive_or_fly,:total_views,:created_date)";
+		String sql = "INSERT INTO trip(user_id, trip_name, trip_details,thing_todo, trip_price, discount_passenger_limit, discount_percent, depart_from, depart_date, return_date, depart_time, night_stay,breakfast,lunch,dinner, total_seats, available, cost_per_day, hotel_price, flight_car_cost, drive_or_fly, total_views,created_date)"+
+				" VALUES(:user_id,:trip_name,:trip_details,:thing_todo,:trip_price,:discount_passenger_limit,:discount_percent,:depart_from,:depart_date,:return_date,:depart_time,:night_stay,:breakfast,:lunch,:dinner,:total_seats,:available,:cost_per_day,:hotel_price,:flight_car_cost,:drive_or_fly,:total_views,:created_date)";
 
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(trip));
 	

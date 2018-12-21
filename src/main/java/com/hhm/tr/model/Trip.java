@@ -8,6 +8,7 @@ public class Trip {
 	private int userId;
 	private String tripName;
 	private String tripDetails;
+	private String thingTodo;
 	private int totalAmount;
 	private int tripPrice;
 	private int discountPassengerLimit;
@@ -248,6 +249,16 @@ public class Trip {
 
 	public void setRating(double rating) {
 		this.rating = rating;
+	}
+
+
+	public String getThingTodo() {
+		return thingTodo;
+	}
+
+
+	public void setThingTodo(String thingTodo) {
+		this.thingTodo = thingTodo;
 	}
 	
 	
