@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.hhm.tr.base.BaseResponse;
 import com.hhm.tr.dao.TripDao;
+import com.hhm.tr.model.MoreTrip;
 import com.hhm.tr.model.RecommendTrip;
 import com.hhm.tr.model.Trip;
 
@@ -43,6 +44,12 @@ public class ApiTripServiceImpl implements ApiTripService {
 	public BaseResponse deleteTrip(int id) {
 		// TODO Auto-generated method stub
 		return tripDao.deleteTrip(id);
+	}
+
+	@Override
+	public MoreTrip getMoreTrips(int tripType) {
+		// TODO Auto-generated method stub
+		return tripDao.getMoreTrips(tripType);
 	}
 
  

@@ -124,7 +124,7 @@ public class ReviewDaoImpl implements ReviewDao {
 
 			return res;
 		} else {
-			String sql = "UPDATE review SET rating=:rating,comment=:comment,rate_by_name=:rate_by_name WHERE rate_by = :rate_by";
+			String sql = "UPDATE review SET rating=:rating,comment=:comment,rate_by_name=:rate_by_name,created_date=:created_date WHERE rate_by = :rate_by";
 			BaseResponse res = new BaseResponse();
 			int response = namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(review));
 			if (response > 0) {

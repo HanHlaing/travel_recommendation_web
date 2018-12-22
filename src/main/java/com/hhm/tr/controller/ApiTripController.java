@@ -26,6 +26,11 @@ public class ApiTripController {
    	 return new ResponseEntity<RecommendTrip>(trips, HttpStatus.OK);
     }
     
+	@RequestMapping(value = "/api/trip/moreTrip/{type}", method = RequestMethod.GET)
+	public BaseResponse moreTrip(@PathVariable("type") int type) {
+    	return tripService.getMoreTrips(type);
+    }
+	
     @RequestMapping(value = "/api/trip/create", method = RequestMethod.POST)
     public BaseResponse createTrip(@RequestBody Trip trip) {   	
     	return tripService.createTrip(trip);

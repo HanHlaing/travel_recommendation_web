@@ -8,6 +8,7 @@ public class Trip {
 	private int userId;
 	private String tripName;
 	private String tripDetails;
+	private String createdBy;
 	private String thingTodo;
 	private int totalAmount;
 	private int tripPrice;
@@ -79,6 +80,16 @@ public class Trip {
 
 	public void setTripPrice(int tripPrice) {
 		this.tripPrice = tripPrice;
+	}
+	
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 
 
