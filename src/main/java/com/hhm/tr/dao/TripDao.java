@@ -18,4 +18,6 @@ public interface TripDao {
 
 	MoreTrip getMoreTrips(int tripType);
 
+	MoreTrip getTripsByTour(int tourId);
+
 }

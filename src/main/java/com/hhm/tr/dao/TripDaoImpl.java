@@ -100,18 +100,23 @@ public class TripDaoImpl implements TripDao {
 	public RecommendTrip getAllTrips() {
 
 		RecommendTrip trips = new RecommendTrip();
-		String sql = "SELECT * FROM trip order by rating desc LIMIT 10";
+		String sql = "SELECT * FROM trip order by rating desc LIMIT 5";
 
-		String sql1 = "SELECT * FROM trip order by created_date desc LIMIT 10";
+		String sql1 = "SELECT * FROM trip order by created_date desc LIMIT 5";
+		
+		String sql2 = "SELECT * FROM trip LIMIT 5";
 		try {
 			List<Trip> popularList = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null),
 					new TripMapper());
 
 			List<Trip> recentList = namedParameterJdbcTemplate.query(sql1, getSqlParameterByModel(null),
 					new TripMapper());
+			
+			List<Trip> recommendList = namedParameterJdbcTemplate.query(sql2, getSqlParameterByModel(null),
+					new TripMapper());
 
 			trips.setPopularList(popularList);
-			trips.setRecommendList(recentList);
+			trips.setRecommendList(recommendList);
 			trips.setRecentList(recentList);
 			trips.setMesssageCode("000");
 			trips.setMessage("You are welcome!");
@@ -148,6 +153,30 @@ public class TripDaoImpl implements TripDao {
 		}
 		return trips;
 	}
+	
+	@Override
+	public MoreTrip getTripsByTour(int tourId) {
+
+		MoreTrip trips = new MoreTrip();
+		 
+		String sql = "SELECT * FROM trip where user_id=:user_id order by created_date desc";
+
+		try {
+			Trip trip=new Trip();
+			trip.setUserId(tourId);
+			List<Trip> moreList = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(trip),
+					new TripMapper());
+			trips.setMoreList(moreList);
+			trips.setMesssageCode("000");
+			trips.setMessage("You are welcome!");
+		} catch (Exception e) {
+			System.out.println("Error in more trip => " + e.getMessage());
+			trips.setMesssageCode("003");
+			trips.setMessage(e.getMessage());
+		}
+		return trips;
+	}
+
 
 	@Override
 	public BaseResponse createTrip(Trip trip) {

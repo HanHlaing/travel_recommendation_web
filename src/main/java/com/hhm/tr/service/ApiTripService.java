@@ -17,4 +17,6 @@ public interface ApiTripService {
 	BaseResponse updateTrip(Trip trip);
 
 	BaseResponse deleteTrip(int id);
+	
+	MoreTrip getTripsByTour(int tourId);
 }

@@ -52,6 +52,12 @@ public class ApiTripServiceImpl implements ApiTripService {
 		return tripDao.getMoreTrips(tripType);
 	}
 
+	@Override
+	public MoreTrip getTripsByTour(int tourId) {
+		// TODO Auto-generated method stub
+		return tripDao.getTripsByTour(tourId);
+	}
+
  
 	 
 }
