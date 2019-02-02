@@ -8,6 +8,7 @@ public class Trip {
 	private int userId;
 	private String tripName;
 	private String tripDetails;
+	private String image;
 	private String createdBy;
 	private String thingTodo;
 	private int totalAmount;
@@ -270,6 +271,16 @@ public class Trip {
 
 	public void setThingTodo(String thingTodo) {
 		this.thingTodo = thingTodo;
+	}
+
+
+	public String getImage() {
+		return image;
+	}
+
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
 	

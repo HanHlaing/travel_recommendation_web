@@ -36,6 +36,7 @@ public class TripDaoImpl implements TripDao {
 			parameterSource.addValue("lunch", trip.isHaveLunch() ? 1 : 0);
 			parameterSource.addValue("dinner", trip.isHaveDinner() ? 1 : 0);
 			parameterSource.addValue("trip_details", trip.getTripDetails());
+			parameterSource.addValue("image", trip.getImage());
 			parameterSource.addValue("created_by", trip.getCreatedBy());
 			parameterSource.addValue("thing_todo", trip.getThingTodo());
 			parameterSource.addValue("trip_price", trip.getTripPrice());
@@ -71,6 +72,7 @@ public class TripDaoImpl implements TripDao {
 			trip.setHaveLunch(rs.getInt("lunch") == 0 ? false : true);
 			trip.setHaveDinner(rs.getInt("dinner") == 0 ? false : true);
 			trip.setTripDetails(rs.getString("trip_details"));
+			trip.setImage(rs.getString("image"));
 			trip.setCreatedBy(rs.getString("created_by"));
 			trip.setThingTodo(rs.getString("thing_todo"));
 			trip.setTripPrice(rs.getInt("trip_price"));
