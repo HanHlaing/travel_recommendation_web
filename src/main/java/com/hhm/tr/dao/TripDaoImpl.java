@@ -208,8 +208,8 @@ public class TripDaoImpl implements TripDao {
 	}
 
 	public void insertTrip(Trip trip) {
-		String sql = "INSERT INTO trip(user_id, trip_name, trip_details,created_by,thing_todo, trip_price, discount_passenger_limit, discount_percent, depart_from, depart_date, return_date, depart_time, night_stay,breakfast,lunch,dinner, total_seats, available, cost_per_day, hotel_price, flight_car_cost, drive_or_fly, total_views,created_date)"
-				+ " VALUES(:user_id,:trip_name,:trip_details,:created_by,:thing_todo,:trip_price,:discount_passenger_limit,:discount_percent,:depart_from,:depart_date,:return_date,:depart_time,:night_stay,:breakfast,:lunch,:dinner,:total_seats,:available,:cost_per_day,:hotel_price,:flight_car_cost,:drive_or_fly,:total_views,:created_date)";
+		String sql = "INSERT INTO trip(user_id, trip_name, trip_details,image,created_by,thing_todo, trip_price, discount_passenger_limit, discount_percent, depart_from, depart_date, return_date, depart_time, night_stay,breakfast,lunch,dinner, total_seats, available, cost_per_day, hotel_price, flight_car_cost, drive_or_fly, total_views,created_date)"
+				+ " VALUES(:user_id,:trip_name,:trip_details,:image,:created_by,:thing_todo,:trip_price,:discount_passenger_limit,:discount_percent,:depart_from,:depart_date,:return_date,:depart_time,:night_stay,:breakfast,:lunch,:dinner,:total_seats,:available,:cost_per_day,:hotel_price,:flight_car_cost,:drive_or_fly,:total_views,:created_date)";
 
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(trip));
 
