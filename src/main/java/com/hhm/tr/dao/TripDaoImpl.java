@@ -106,7 +106,7 @@ public class TripDaoImpl implements TripDao {
 
 		String sql1 = "SELECT * FROM trip order by created_date desc LIMIT 5";
 		
-		String sql2 = "SELECT * FROM trip LIMIT 5";
+		String sql2 = "SELECT * FROM trip ORDER BY RAND() LIMIT 5";
 		try {
 			List<Trip> popularList = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null),
 					new TripMapper());
@@ -140,7 +140,7 @@ public class TripDaoImpl implements TripDao {
 		else if (tripType == 2)
 			sql = "SELECT * FROM trip order by created_date desc";
 		else
-			sql = "SELECT * FROM trip order by created_date desc";
+			sql = "SELECT * FROM trip ORDER BY RAND()";
 
 		try {
 			List<Trip> moreList = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null),
