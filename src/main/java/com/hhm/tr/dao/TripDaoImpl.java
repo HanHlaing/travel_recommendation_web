@@ -14,7 +14,9 @@ import org.springframework.stereotype.Repository;
 import com.hhm.tr.base.BaseResponse;
 import com.hhm.tr.model.MoreTrip;
 import com.hhm.tr.model.RecommendTrip;
+import com.hhm.tr.model.ResponseTripSearchData;
 import com.hhm.tr.model.Trip;
+import com.hhm.tr.model.TripSearchData;
 
 @Repository
 public class TripDaoImpl implements TripDao {
@@ -105,7 +107,7 @@ public class TripDaoImpl implements TripDao {
 		String sql = "SELECT * FROM trip order by rating desc LIMIT 5";
 
 		String sql1 = "SELECT * FROM trip order by created_date desc LIMIT 5";
-		
+
 		String sql2 = "SELECT * FROM trip ORDER BY RAND() LIMIT 5";
 		try {
 			List<Trip> popularList = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null),
@@ -113,7 +115,7 @@ public class TripDaoImpl implements TripDao {
 
 			List<Trip> recentList = namedParameterJdbcTemplate.query(sql1, getSqlParameterByModel(null),
 					new TripMapper());
-			
+
 			List<Trip> recommendList = namedParameterJdbcTemplate.query(sql2, getSqlParameterByModel(null),
 					new TripMapper());
 
@@ -143,8 +145,7 @@ public class TripDaoImpl implements TripDao {
 			sql = "SELECT * FROM trip ORDER BY RAND()";
 
 		try {
-			List<Trip> moreList = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null),
-					new TripMapper());
+			List<Trip> moreList = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new TripMapper());
 			trips.setMoreList(moreList);
 			trips.setMesssageCode("000");
 			trips.setMessage("You are welcome!");
@@ -155,19 +156,18 @@ public class TripDaoImpl implements TripDao {
 		}
 		return trips;
 	}
-	
+
 	@Override
 	public MoreTrip getTripsByTour(int tourId) {
 
 		MoreTrip trips = new MoreTrip();
-		 
+
 		String sql = "SELECT * FROM trip where user_id=:user_id order by created_date desc";
 
 		try {
-			Trip trip=new Trip();
+			Trip trip = new Trip();
 			trip.setUserId(tourId);
-			List<Trip> moreList = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(trip),
-					new TripMapper());
+			List<Trip> moreList = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(trip), new TripMapper());
 			trips.setMoreList(moreList);
 			trips.setMesssageCode("000");
 			trips.setMessage("You are welcome!");
@@ -179,6 +179,36 @@ public class TripDaoImpl implements TripDao {
 		return trips;
 	}
 
+	@Override
+	public ResponseTripSearchData searchTrip(TripSearchData trip) {
+		
+		ResponseTripSearchData trips = new ResponseTripSearchData();
+
+		String sql = "";
+		if (trip.getIsDrive() == 0) {
+
+			sql = "SELECT * FROM trip where drive_or_fly!=2 and depart_date >=:depart_date and depart_from=:depart_from  order by created_date desc";
+		} else {
+
+			sql = "SELECT * FROM trip where drive_or_fly=2 and depart_date >=:depart_date and depart_from=:depart_from  order by created_date desc";
+		}
+
+		try {
+			MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+			parameterSource.addValue("depart_date", trip.getDepartDate());
+			parameterSource.addValue("depart_from", trip.getDepartFrom());
+
+			List<Trip> moreList = namedParameterJdbcTemplate.query(sql, parameterSource, new TripMapper());
+			trips.setTripList(moreList);
+			trips.setMesssageCode("000");
+			trips.setMessage("You are welcome!");
+		} catch (Exception e) {
+			System.out.println("Error in search package => " + e.getMessage());
+			trips.setMesssageCode("003");
+			trips.setMessage(e.getMessage());
+		}
+		return trips;
+	}
 
 	@Override
 	public BaseResponse createTrip(Trip trip) {

@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hhm.tr.base.BaseResponse;
 import com.hhm.tr.model.MoreTrip;
 import com.hhm.tr.model.RecommendTrip;
+import com.hhm.tr.model.ResponseTripSearchData;
 import com.hhm.tr.model.Trip;
+import com.hhm.tr.model.TripSearchData;
 import com.hhm.tr.service.ApiTripService;
 
 @RestController
@@ -41,6 +43,11 @@ public class ApiTripController {
     @RequestMapping(value = "/api/trip/create", method = RequestMethod.POST)
     public BaseResponse createTrip(@RequestBody Trip trip) {   	
     	return tripService.createTrip(trip);
+    }
+    
+    @RequestMapping(value = "/api/trip/search", method = RequestMethod.POST)
+    public ResponseTripSearchData searchTrip(@RequestBody TripSearchData trip) {   	
+    	return tripService.searchTrip(trip);
     }
     
     @RequestMapping(value = "/api/trip/update", method = RequestMethod.POST)

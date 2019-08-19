@@ -8,7 +8,9 @@ import com.hhm.tr.base.BaseResponse;
 import com.hhm.tr.dao.TripDao;
 import com.hhm.tr.model.MoreTrip;
 import com.hhm.tr.model.RecommendTrip;
+import com.hhm.tr.model.ResponseTripSearchData;
 import com.hhm.tr.model.Trip;
+import com.hhm.tr.model.TripSearchData;
 
 @Service("tripService")
 @Transactional
@@ -56,6 +58,12 @@ public class ApiTripServiceImpl implements ApiTripService {
 	public MoreTrip getTripsByTour(int tourId) {
 		// TODO Auto-generated method stub
 		return tripDao.getTripsByTour(tourId);
+	}
+
+	@Override
+	public ResponseTripSearchData searchTrip(TripSearchData trip) {
+		// TODO Auto-generated method stub
+		return tripDao.searchTrip(trip);
 	}
 
  
