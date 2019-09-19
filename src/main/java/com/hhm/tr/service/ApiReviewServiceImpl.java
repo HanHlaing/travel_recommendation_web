@@ -43,5 +43,11 @@ public class ApiReviewServiceImpl implements ApiReviewService {
 		// TODO Auto-generated method stub
 		return reviewDao.getAllReviews(id);
 	}
+	
+	@Override
+	public List<Review> getReviewsByUserId(int userId) {
+		// TODO Auto-generated method stub
+		return reviewDao.getReviewsByUserId(userId);
+	}
 
 }

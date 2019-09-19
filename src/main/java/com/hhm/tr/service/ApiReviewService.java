@@ -15,4 +15,6 @@ public interface ApiReviewService {
 
 	BaseResponse deleteReview(int id);
 
+	List<Review> getReviewsByUserId(int userid);
+
 }

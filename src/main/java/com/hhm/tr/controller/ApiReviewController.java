@@ -43,4 +43,11 @@ public class ApiReviewController {
 	public BaseResponse deleteReview(@PathVariable("id") int id) {
     	return reviewService.deleteReview(id);
     }
+    
+    @RequestMapping(value = "/api/review/getReviewsByUserId/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<Review>> getReviewsByUserId(@PathVariable("id") int id) {
+    	List<Review> reviews = reviewService.getReviewsByUserId(id); 	
+   	 return new ResponseEntity<List<Review>>(reviews, HttpStatus.OK);
+    }
+    
 }

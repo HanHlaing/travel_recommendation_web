@@ -16,4 +16,6 @@ public interface ReviewDao {
 
 	List<Review> getAllReviews(int id);
 
+	List<Review> getReviewsByUserId(int userId);
+
 }

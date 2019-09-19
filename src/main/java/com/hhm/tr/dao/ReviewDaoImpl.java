@@ -103,6 +103,17 @@ public class ReviewDaoImpl implements ReviewDao {
 
 		return list;
 	}
+	
+	@Override
+	public List<Review> getReviewsByUserId(int userId) {
+		String sql = "SELECT * FROM review  where status=1 and rate_by=:rate_by and type=0 order by created_date desc";
+		
+		Review review = new Review();
+		review.setRateBy(userId);
+		List<Review> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(review), new ReviewMapper());
+
+		return list;
+	}
 
 	@Override
 	public BaseResponse postReview(Review review) {
