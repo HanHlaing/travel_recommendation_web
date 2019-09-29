@@ -16,6 +16,7 @@ public class Trip {
 	private int discountPassengerLimit;
 	private int discountPercent;
 	private String departFrom;
+	private String arrival;
 	private Date departDate;
 	private Date returnDate;
 	private Date departTime;
@@ -49,7 +50,7 @@ public class Trip {
 	}
 
 	public Trip(int userId, String tripName, String tripDetails, int amount, int discountPassengerLimit,
-			int discountPercent, String departFrom, Date departDate, Date returnDate, Date departTime, int nightStay,
+			int discountPercent, String departFrom,String arrival, Date departDate, Date returnDate, Date departTime, int nightStay,
 			int totalSeats, int available, int costPerDay, int hotelPrice, int flightCarCost, int driveOrFly,
 			int totalViews) {
 		
@@ -60,6 +61,7 @@ public class Trip {
 		this.discountPassengerLimit = discountPassengerLimit;
 		this.discountPercent = discountPercent;
 		this.departFrom = departFrom;
+		this.arrival = arrival;
 		this.departDate = departDate;
 		this.returnDate = returnDate;
 		this.departTime = departTime;
@@ -282,8 +284,16 @@ public class Trip {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	
-	
+
+
+	public String getArrival() {
+		return arrival;
+	}
+
+
+	public void setArrival(String arrival) {
+		this.arrival = arrival;
+	}
 	
 
 }

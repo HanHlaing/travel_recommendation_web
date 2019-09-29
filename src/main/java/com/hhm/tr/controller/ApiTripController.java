@@ -51,7 +51,7 @@ public class ApiTripController {
     }
     
     @RequestMapping(value = "/api/trip/update", method = RequestMethod.POST)
-    public BaseResponse login(@RequestBody Trip trip) {   
+    public BaseResponse updateTrip(@RequestBody Trip trip) {   
     	return tripService.updateTrip(trip);
     }
 
