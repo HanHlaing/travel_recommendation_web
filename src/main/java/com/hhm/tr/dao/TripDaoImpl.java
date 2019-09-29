@@ -37,6 +37,7 @@ public class TripDaoImpl implements TripDao {
 			parameterSource.addValue("breakfast", trip.isHaveBreakfast() ? 1 : 0);
 			parameterSource.addValue("lunch", trip.isHaveLunch() ? 1 : 0);
 			parameterSource.addValue("dinner", trip.isHaveDinner() ? 1 : 0);
+			parameterSource.addValue("hotel_type", trip.getHotelType());
 			parameterSource.addValue("trip_details", trip.getTripDetails());
 			parameterSource.addValue("image", trip.getImage());
 			parameterSource.addValue("created_by", trip.getCreatedBy());
@@ -74,6 +75,7 @@ public class TripDaoImpl implements TripDao {
 			trip.setHaveBreakfast(rs.getInt("breakfast") == 0 ? false : true);
 			trip.setHaveLunch(rs.getInt("lunch") == 0 ? false : true);
 			trip.setHaveDinner(rs.getInt("dinner") == 0 ? false : true);
+			trip.setHotelType(rs.getInt("hotel_type"));
 			trip.setTripDetails(rs.getString("trip_details"));
 			trip.setImage(rs.getString("image"));
 			trip.setCreatedBy(rs.getString("created_by"));
@@ -240,8 +242,8 @@ public class TripDaoImpl implements TripDao {
 	}
 
 	public void insertTrip(Trip trip) {
-		String sql = "INSERT INTO trip(user_id, trip_name, trip_details,image,created_by,thing_todo, trip_price, discount_passenger_limit, discount_percent, depart_from,arrival, depart_date, return_date, depart_time, night_stay,breakfast,lunch,dinner, total_seats, available, cost_per_day, hotel_price, flight_car_cost, drive_or_fly, total_views,created_date)"
-				+ " VALUES(:user_id,:trip_name,:trip_details,:image,:created_by,:thing_todo,:trip_price,:discount_passenger_limit,:discount_percent,:depart_from,:arrival,:depart_date,:return_date,:depart_time,:night_stay,:breakfast,:lunch,:dinner,:total_seats,:available,:cost_per_day,:hotel_price,:flight_car_cost,:drive_or_fly,:total_views,:created_date)";
+		String sql = "INSERT INTO trip(user_id, trip_name, trip_details,image,created_by,thing_todo, trip_price, discount_passenger_limit, discount_percent, depart_from,arrival, depart_date, return_date, depart_time, night_stay,breakfast,lunch,dinner,hotel_type, total_seats, available, cost_per_day, hotel_price, flight_car_cost, drive_or_fly, total_views,created_date)"
+				+ " VALUES(:user_id,:trip_name,:trip_details,:image,:created_by,:thing_todo,:trip_price,:discount_passenger_limit,:discount_percent,:depart_from,:arrival,:depart_date,:return_date,:depart_time,:night_stay,:breakfast,:lunch,:dinner,:hotel_type,:total_seats,:available,:cost_per_day,:hotel_price,:flight_car_cost,:drive_or_fly,:total_views,:created_date)";
 
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(trip));
 
@@ -251,7 +253,7 @@ public class TripDaoImpl implements TripDao {
 	public BaseResponse updateTrip(Trip trip) {
 		String sql = "UPDATE trip SET "
 				+ " user_id=:user_id,trip_name=:trip_name,trip_details=:trip_details,trip_price=:trip_price,discount_passenger_limit=:discount_passenger_limit,discount_percent=:discount_percent,depart_from=:depart_from,arrival=:arrival,"
-				+ "depart_date=:depart_date,return_date=:return_date,depart_time=:depart_time,night_stay=:night_stay,breakfast=:breakfast,lunch=:lunch,dinner=:dinner,total_seats=:total_seats,available=:available,cost_per_day=:cost_per_day,hotel_price=:hotel_price,flight_car_cost=:flight_car_cost,drive_or_fly=:drive_or_fly,total_views=:total_views "
+				+ "depart_date=:depart_date,return_date=:return_date,depart_time=:depart_time,night_stay=:night_stay,breakfast=:breakfast,lunch=:lunch,dinner=:dinner,hotel_type=:hotel_type,total_seats=:total_seats,available=:available,cost_per_day=:cost_per_day,hotel_price=:hotel_price,flight_car_cost=:flight_car_cost,drive_or_fly=:drive_or_fly,total_views=:total_views "
 				+ " WHERE id = :id";
 		BaseResponse res = new BaseResponse();
 		int response = namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(trip));

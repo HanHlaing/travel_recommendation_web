@@ -34,6 +34,7 @@ public class Trip {
 	private boolean haveBreakfast;
 	private boolean haveLunch;
 	private boolean haveDinner;
+	private int hotelType;
 	public Trip() {
 		super();
 	}
@@ -293,6 +294,16 @@ public class Trip {
 
 	public void setArrival(String arrival) {
 		this.arrival = arrival;
+	}
+
+
+	public int getHotelType() {
+		return hotelType;
+	}
+
+
+	public void setHotelType(int hotelType) {
+		this.hotelType = hotelType;
 	}
 	
 
