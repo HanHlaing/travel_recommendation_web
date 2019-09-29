@@ -164,12 +164,12 @@ public class TripDaoImpl implements TripDao {
 
 		MoreTrip trips = new MoreTrip();
 
-		String sql = "SELECT * FROM trip where user_id=:user_id order by created_date desc";
+		String sql = "SELECT * FROM trip where user_id="+tourId+" order by created_date desc";
 
 		try {
-			Trip trip = new Trip();
-			trip.setUserId(tourId);
-			List<Trip> moreList = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(trip), new TripMapper());
+			//Trip trip = new Trip();
+			//trip.setUserId(tourId);
+			List<Trip> moreList = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new TripMapper());
 			trips.setMoreList(moreList);
 			trips.setMesssageCode("000");
 			trips.setMessage("You are welcome!");
