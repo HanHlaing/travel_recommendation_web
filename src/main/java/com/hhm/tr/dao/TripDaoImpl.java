@@ -210,7 +210,7 @@ public class TripDaoImpl implements TripDao {
 					thingToDo = " and thing_todo like %" + thingToDoArr[i] + "%";
 				} else if(i > 1){
 
-					thingToDo = " or thing_todo like %" + thingToDoArr[i] + "%";
+					thingToDo += " or thing_todo like %" + thingToDoArr[i] + "%";
 				}
 
 			}
