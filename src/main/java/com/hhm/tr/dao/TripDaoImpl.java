@@ -166,11 +166,11 @@ public class TripDaoImpl implements TripDao {
 
 		MoreTrip trips = new MoreTrip();
 
-		String sql = "SELECT * FROM trip where user_id="+tourId+" order by created_date desc";
+		String sql = "SELECT * FROM trip where user_id=" + tourId + " order by created_date desc";
 
 		try {
-			//Trip trip = new Trip();
-			//trip.setUserId(tourId);
+			// Trip trip = new Trip();
+			// trip.setUserId(tourId);
 			List<Trip> moreList = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new TripMapper());
 			trips.setMoreList(moreList);
 			trips.setMesssageCode("000");
@@ -185,16 +185,24 @@ public class TripDaoImpl implements TripDao {
 
 	@Override
 	public ResponseTripSearchData searchTrip(TripSearchData trip) {
-		
+
 		ResponseTripSearchData trips = new ResponseTripSearchData();
 
 		String sql = "";
+		String priceQuery = "";
+		if (trip.getMinPrice() > 0 && trip.getMaxPrice() > 0)
+			priceQuery = "and trip_price >="+trip.getMinPrice()+" and trip_price <="+trip.getMaxPrice();
+		else if(trip.getMinPrice() > 0)
+			priceQuery = "and trip_price >="+trip.getMinPrice();
+		else if(trip.getMaxPrice() > 0)
+			priceQuery = "and trip_price <="+trip.getMaxPrice();
+		
 		if (trip.getIsDrive() == 0) {
 
-			sql = "SELECT * FROM trip where drive_or_fly!=2 and depart_date >=:depart_date and depart_from=:depart_from  order by created_date desc";
+			sql = "SELECT * FROM trip where drive_or_fly!=2 and depart_date >=:depart_date and depart_from=:depart_from "+priceQuery+" order by created_date desc";
 		} else {
 
-			sql = "SELECT * FROM trip where drive_or_fly=2 and depart_date >=:depart_date and depart_from=:depart_from  order by created_date desc";
+			sql = "SELECT * FROM trip where drive_or_fly=2 and depart_date >=:depart_date and depart_from=:depart_from "+priceQuery+" order by created_date desc";
 		}
 
 		try {
