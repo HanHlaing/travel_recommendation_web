@@ -205,10 +205,10 @@ public class TripDaoImpl implements TripDao {
 			thingToDoArr = trip.getThingsTodo().split("#");
 			for (int i = 0; i < thingToDoArr.length; i++) {
 
-				if (i == 0) {
+				if (i == 1) {
 
 					thingToDo = " and thing_todo like %" + thingToDoArr[i] + "%";
-				} else {
+				} else if(i > 1){
 
 					thingToDo = " or thing_todo like %" + thingToDoArr[i] + "%";
 				}
