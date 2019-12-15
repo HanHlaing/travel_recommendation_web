@@ -190,19 +190,40 @@ public class TripDaoImpl implements TripDao {
 
 		String sql = "";
 		String priceQuery = "";
+		String thingToDo = "";
+		String[] thingToDoArr;
+
 		if (trip.getMinPrice() > 0 && trip.getMaxPrice() > 0)
-			priceQuery = "and trip_price >="+trip.getMinPrice()+" and trip_price <="+trip.getMaxPrice();
-		else if(trip.getMinPrice() > 0)
-			priceQuery = "and trip_price >="+trip.getMinPrice();
-		else if(trip.getMaxPrice() > 0)
-			priceQuery = "and trip_price <="+trip.getMaxPrice();
-		
+			priceQuery = "and trip_price >=" + trip.getMinPrice() + " and trip_price <=" + trip.getMaxPrice();
+		else if (trip.getMinPrice() > 0)
+			priceQuery = "and trip_price >=" + trip.getMinPrice();
+		else if (trip.getMaxPrice() > 0)
+			priceQuery = "and trip_price <=" + trip.getMaxPrice();
+
+		if (trip.getThingsTodo().length() > 0) {
+
+			thingToDoArr = trip.getThingsTodo().split("#");
+			for (int i = 0; i < thingToDoArr.length; i++) {
+
+				if (i == 0) {
+
+					thingToDo = " and thing_todo like %" + thingToDoArr[i] + "%";
+				} else {
+
+					thingToDo = " or thing_todo like %" + thingToDoArr[i] + "%";
+				}
+
+			}
+		}
+
 		if (trip.getIsDrive() == 0) {
 
-			sql = "SELECT * FROM trip where drive_or_fly!=2 and depart_date >=:depart_date and depart_from=:depart_from "+priceQuery+" order by created_date desc";
+			sql = "SELECT * FROM trip where drive_or_fly!=2 and depart_date >=:depart_date and depart_from=:depart_from "
+					+ priceQuery + thingToDo + " order by created_date desc";
 		} else {
 
-			sql = "SELECT * FROM trip where drive_or_fly=2 and depart_date >=:depart_date and depart_from=:depart_from "+priceQuery+" order by created_date desc";
+			sql = "SELECT * FROM trip where drive_or_fly=2 and depart_date >=:depart_date and depart_from=:depart_from "
+					+ priceQuery + thingToDo + " order by created_date desc";
 		}
 
 		try {
