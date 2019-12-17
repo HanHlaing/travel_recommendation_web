@@ -5,6 +5,7 @@ public class TripSearchData {
 
 	private String departFrom;
 	private String departDate;
+	private String returnDate;
 	private int totalPassenger;
 	private int minPrice;
 	private int maxPrice;
@@ -59,6 +60,12 @@ public class TripSearchData {
 	}
 	public void setIsDrive(int isDrive) {
 		this.isDrive = isDrive;
+	}
+	public String getReturnDate() {
+		return returnDate;
+	}
+	public void setReturnDate(String returnDate) {
+		this.returnDate = returnDate;
 	}
 	
 	

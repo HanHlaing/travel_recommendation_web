@@ -221,17 +221,18 @@ public class TripDaoImpl implements TripDao {
 
 		if (trip.getIsDrive() == 0) {
 
-			sql = "SELECT * FROM trip where drive_or_fly!=2 and depart_date >=:depart_date and depart_from=:depart_from "
+			sql = "SELECT * FROM trip where drive_or_fly!=2 and depart_date >=:depart_date and return_date <=:return_date and depart_from=:depart_from "
 					+ priceQuery + thingToDo + " order by created_date desc";
 		} else {
 
-			sql = "SELECT * FROM trip where drive_or_fly=2 and depart_date >=:depart_date and depart_from=:depart_from "
+			sql = "SELECT * FROM trip where drive_or_fly=2 and depart_date >=:depart_date and return_date <=:return_date and depart_from=:depart_from "
 					+ priceQuery + thingToDo + " order by created_date desc";
 		}
 
 		try {
 			MapSqlParameterSource parameterSource = new MapSqlParameterSource();
 			parameterSource.addValue("depart_date", trip.getDepartDate());
+			parameterSource.addValue("return_date", trip.getReturnDate());
 			parameterSource.addValue("depart_from", trip.getDepartFrom());
 
 			List<Trip> moreList = namedParameterJdbcTemplate.query(sql, parameterSource, new TripMapper());
