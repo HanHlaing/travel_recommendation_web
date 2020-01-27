@@ -108,11 +108,11 @@ public class TripDaoImpl implements TripDao {
 	public RecommendTrip getAllTrips() {
 
 		RecommendTrip trips = new RecommendTrip();
-		String sql = "SELECT * FROM trip order by rating desc LIMIT 5";
+		String sql = "SELECT * FROM trip where status!=0 order by rating desc LIMIT 5";
 
-		String sql1 = "SELECT * FROM trip order by created_date desc LIMIT 5";
+		String sql1 = "SELECT * FROM trip where status!=0 order by created_date desc LIMIT 5";
 
-		String sql2 = "SELECT * FROM trip ORDER BY RAND() LIMIT 5";
+		String sql2 = "SELECT * FROM trip where status!=0 ORDER BY RAND() LIMIT 5";
 		try {
 			List<Trip> popularList = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null),
 					new TripMapper());
@@ -142,11 +142,11 @@ public class TripDaoImpl implements TripDao {
 		String sql = "";
 		MoreTrip trips = new MoreTrip();
 		if (tripType == 1)
-			sql = "SELECT * FROM trip order by rating desc";
+			sql = "SELECT * FROM trip where status!=0 order by rating desc";
 		else if (tripType == 2)
-			sql = "SELECT * FROM trip order by created_date desc";
+			sql = "SELECT * FROM trip where status!=0 order by created_date desc";
 		else
-			sql = "SELECT * FROM trip ORDER BY RAND()";
+			sql = "SELECT * FROM trip where status!=0 ORDER BY RAND()";
 
 		try {
 			List<Trip> moreList = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new TripMapper());
@@ -166,7 +166,7 @@ public class TripDaoImpl implements TripDao {
 
 		MoreTrip trips = new MoreTrip();
 
-		String sql = "SELECT * FROM trip where user_id=" + tourId + " order by created_date desc";
+		String sql = "SELECT * FROM trip where status!=0 and user_id=" + tourId + " order by created_date desc";
 
 		try {
 			// Trip trip = new Trip();
@@ -221,11 +221,11 @@ public class TripDaoImpl implements TripDao {
 
 		if (trip.getIsDrive() == 0) {
 
-			sql = "SELECT * FROM trip where drive_or_fly!=2 and depart_date >='"+trip.getDepartDate()+"' and return_date <='"+trip.getReturnDate()+"' and depart_from=:depart_from "
+			sql = "SELECT * FROM trip where status!=0 and drive_or_fly!=2 and depart_date >='"+trip.getDepartDate()+"' and return_date <='"+trip.getReturnDate()+"' and depart_from=:depart_from "
 					+ priceQuery + thingToDo + " order by created_date desc";
 		} else {
 
-			sql = "SELECT * FROM trip where drive_or_fly=2 and depart_date >='"+trip.getDepartDate()+"' and return_date <='"+trip.getReturnDate()+"' and depart_from=:depart_from "
+			sql = "SELECT * FROM trip where status!=0 and drive_or_fly=2 and depart_date >='"+trip.getDepartDate()+"' and return_date <='"+trip.getReturnDate()+"' and depart_from=:depart_from "
 					+ priceQuery + thingToDo + " order by created_date desc";
 		}
 
@@ -250,7 +250,7 @@ public class TripDaoImpl implements TripDao {
 	@Override
 	public BaseResponse createTrip(Trip trip) {
 
-		String sql = "SELECT * FROM trip WHERE trip_name = :trip_name";
+		String sql = "SELECT * FROM trip WHERE status!=0 and trip_name = :trip_name";
 		BaseResponse res = new BaseResponse();
 		try {
 			List<Trip> list = namedParameterJdbcTemplate.query(sql,
