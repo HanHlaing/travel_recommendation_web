@@ -109,14 +109,15 @@ public class UserDaoImpl implements UserDao {
 				+ "user_type=:user_type,address=:address "
 				+ " WHERE id = :id";
 		
+		UserBean res = new UserBean();
 		int response = namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(user));
 
 		if (response > 0)
-			user.setMesssageCode("000");
+			res.setMesssageCode("000");
 		else
-			user.setMesssageCode("002");
+			res.setMesssageCode("002");
 
-		return user;
+		return res;
 	}
 
 	@Override
