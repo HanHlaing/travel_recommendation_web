@@ -30,8 +30,8 @@ public class ApiUserServiceImpl implements ApiUserService {
 		userDao.addUser(user);
 	}
 
-	public void updateUser(UserBean user) {
-		userDao.updateUser(user);
+	public BaseResponse updateUser(UserBean user) {
+		return userDao.updateUser(user);
 	}
 
 	public void deleteUser(int id) {

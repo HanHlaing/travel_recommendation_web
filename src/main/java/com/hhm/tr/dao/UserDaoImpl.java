@@ -53,6 +53,7 @@ public class UserDaoImpl implements UserDao {
 	private SqlParameterSource getSqlParameterByModel(UserBean user) {
 		MapSqlParameterSource parameterSource = new MapSqlParameterSource();
 		if (user != null) {
+			parameterSource.addValue("id", user.getId());
 			parameterSource.addValue("email", user.getEmail());
 			parameterSource.addValue("username", user.getUserName());
 			parameterSource.addValue("password", user.getPassword());
@@ -101,9 +102,21 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void updateUser(UserBean user) {
-		// TODO Auto-generated method stub
+	public BaseResponse updateUser(UserBean user) {
+		
+		String sql = "UPDATE user SET "
+				+ " email=:email,username=:username,password=:password,full_name=:full_name,dob=:dob,gender=:gender,mobile_number=:mobile_number,hobbies=:hobbies,"
+				+ "user_type=:user_type,address=:address "
+				+ " WHERE id = :id";
+		
+		int response = namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(user));
 
+		if (response > 0)
+			user.setMesssageCode("000");
+		else
+			user.setMesssageCode("002");
+
+		return user;
 	}
 
 	@Override

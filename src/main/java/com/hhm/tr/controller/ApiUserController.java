@@ -41,6 +41,12 @@ public class ApiUserController {
     	return service.createUser(user);
     }
     
+    @RequestMapping(value = "/api/user/update", method = RequestMethod.POST)
+    public BaseResponse updateUser(@RequestBody UserBean user) {
+    	
+    	return service.updateUser(user);
+    }
+    
     @RequestMapping(value = "/api/user/login", method = RequestMethod.POST)
     public BaseResponse login(@RequestBody UserBean user) {
     	

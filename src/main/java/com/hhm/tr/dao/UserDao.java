@@ -15,7 +15,7 @@ public interface UserDao {
  
  public void addUser(UserBean user);
  
- public void updateUser(UserBean user);
+ public BaseResponse updateUser(UserBean user);
  
  public void deleteUser(int id);
  
