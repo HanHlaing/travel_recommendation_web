@@ -136,7 +136,11 @@ public class ReviewDaoImpl implements ReviewDao {
 			int response = namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(review));
 
 			if (response > 0) {
-				triggerTrip(review);
+				
+				if(review.getType()==0)
+					triggerTrip(review);
+				else
+					triggerUser(review);
 				res.setMesssageCode("000");
 				res.setMessage("Post review successful!");
 			} else {
@@ -179,7 +183,21 @@ public class ReviewDaoImpl implements ReviewDao {
 			
 		if(list.size()>0) {
 			Review result=list.get(0);
-			String tripSql = "UPDATE trip SET rating=:rating,total_views=:total_views WHERE id = :id";
+			String tripSql = "UPDATE trip SET rating=:rating,total_views=:total_views WHERE id = :id and type=0";
+			 namedParameterJdbcTemplate.update(tripSql, getSqlParameterByTripModel(result,review.getRateTo()));
+		}
+		
+	}
+	
+	public void triggerUser(Review review) {
+		String sql = "SELECT count(*) as row,SUM(rating)/count(*) as rating FROM review  WHERE rate_to = :rate_to and type=1";
+
+		List<Review> list = namedParameterJdbcTemplate.query(sql,
+				getSqlParameterByModel(new Review(review.getRateTo(),review.getRateBy())), new ReviewTripMapper());
+			
+		if(list.size()>0) {
+			Review result=list.get(0);
+			String tripSql = "UPDATE user SET rating=:rating WHERE id = :id and type=1";
 			 namedParameterJdbcTemplate.update(tripSql, getSqlParameterByTripModel(result,review.getRateTo()));
 		}
 		
