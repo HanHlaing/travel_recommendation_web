@@ -137,12 +137,17 @@ public class ReviewDaoImpl implements ReviewDao {
 
 			if (response > 0) {
 				
-				if(review.getType()==0)
+				if(review.getType()==0) {
+					
+					res.setMessage("Post review successful!");
 					triggerTrip(review);
-				else
+				}
+				else {
+					res.setMessage("Rating successful!");
 					triggerUser(review);
+				}
 				res.setMesssageCode("000");
-				res.setMessage("Post review successful!");
+				
 			} else {
 				res.setMesssageCode("002");
 				res.setMessage("Post review fail!");
@@ -154,9 +159,17 @@ public class ReviewDaoImpl implements ReviewDao {
 			BaseResponse res = new BaseResponse();
 			int response = namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(review));
 			if (response > 0) {
-				triggerTrip(review);
+				
+				if(review.getType()==0) {
+					
+					res.setMessage("Post review successful!");
+					triggerTrip(review);
+				}
+				else {
+					res.setMessage("Rating successful!");
+					triggerUser(review);
+				}
 				res.setMesssageCode("000");
-				res.setMessage("Post review successful!");
 			} else
 				res.setMesssageCode("002");
 
@@ -166,7 +179,7 @@ public class ReviewDaoImpl implements ReviewDao {
 	}
 
 	public Review isExistingReview(Review review) {
-		String sql = "SELECT * FROM review  WHERE rate_by = :rate_by and rate_to = :rate_to and type=0";
+		String sql = "SELECT * FROM review  WHERE rate_by = :rate_by and rate_to = :rate_to and type="+review.getType();
 
 		List<Review> list = namedParameterJdbcTemplate.query(sql,
 				getSqlParameterByModel(new Review(review.getRateTo(),review.getRateBy())), new ReviewMapper());
