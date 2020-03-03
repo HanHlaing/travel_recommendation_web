@@ -197,7 +197,7 @@ public class ReviewDaoImpl implements ReviewDao {
 			
 		if(list.size()>0) {
 			Review result=list.get(0);
-			String tripSql = "UPDATE user SET rating=:rating WHERE id = :id and type=1";
+			String tripSql = "UPDATE user SET rating=:rating WHERE id = :id ";
 			 namedParameterJdbcTemplate.update(tripSql, getSqlParameterByTripModel(result,review.getRateTo()));
 		}
 		
