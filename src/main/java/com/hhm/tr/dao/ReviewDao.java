@@ -11,6 +11,8 @@ public interface ReviewDao {
 	BaseResponse postReview(Review review);
 	
 	Review getAllReviewById(int rateTo,int rateBy);
+	
+	Review getTourAllReviewById(int rateTo,int rateBy);
 
 	BaseResponse deleteReview(int id);
 

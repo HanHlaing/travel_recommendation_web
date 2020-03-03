@@ -11,6 +11,8 @@ public interface ApiReviewService {
 	
 	Review getAllReviewById(int rateTo,int rateBy);
 	
+	Review getTourAllReviewById(int rateTo,int rateBy);
+	
 	List<Review> getAllReviews(int id);
 
 	BaseResponse deleteReview(int id);

@@ -94,6 +94,17 @@ public class ReviewDaoImpl implements ReviewDao {
 		empty.setReviewId(0);
 		return list.size() > 0 ? list.get(0) : empty;
 	}
+	
+	@Override
+	public Review getTourAllReviewById(int rateTo,int rateBy) {
+		String sql = "SELECT * FROM review  WHERE rate_by = :rate_by and rate_to=:rate_to and type=1";
+
+		List<Review> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(new Review(rateTo,rateBy)),
+				new ReviewMapper());
+		Review empty=new Review();
+		empty.setReviewId(0);
+		return list.size() > 0 ? list.get(0) : empty;
+	}
 
 	@Override
 	public List<Review> getAllReviews(int id) {

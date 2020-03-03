@@ -27,6 +27,12 @@ public class ApiReviewController {
    	 return new ResponseEntity<Review>(reviews, HttpStatus.OK);
     }
 	
+	@RequestMapping(value = "/api/review/getTourReviewById/{rateTo}/{rateBy}", method = RequestMethod.GET)
+    public ResponseEntity<Review> getTourReviewById(@PathVariable("rateTo") int rateTo,@PathVariable("rateBy")int rateBy) {
+    	Review reviews = reviewService.getTourAllReviewById(rateTo,rateBy); 	
+   	 return new ResponseEntity<Review>(reviews, HttpStatus.OK);
+    }
+	
 	@RequestMapping(value = "/api/review/getReviews/{id}", method = RequestMethod.GET)
     public ResponseEntity<List<Review>> getReviews(@PathVariable("id") int id) {
     	List<Review> reviews = reviewService.getAllReviews(id); 	

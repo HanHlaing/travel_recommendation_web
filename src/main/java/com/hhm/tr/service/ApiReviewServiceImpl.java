@@ -31,6 +31,12 @@ public class ApiReviewServiceImpl implements ApiReviewService {
 		// TODO Auto-generated method stub
 		return reviewDao.getAllReviewById(rateTo,rateBy);
 	}
+	
+	@Override
+	public Review getTourAllReviewById(int rateTo,int rateBy) {
+		// TODO Auto-generated method stub
+		return reviewDao.getTourAllReviewById(rateTo,rateBy);
+	}
 
 	@Override
 	public BaseResponse deleteReview(int id) {
