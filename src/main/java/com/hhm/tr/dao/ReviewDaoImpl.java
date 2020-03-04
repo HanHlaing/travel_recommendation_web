@@ -194,14 +194,14 @@ public class ReviewDaoImpl implements ReviewDao {
 	}
 	
 	public void triggerTrip(Review review) {
-		String sql = "SELECT count(*) as row,SUM(rating)/count(*) as rating FROM review  WHERE rate_to = :rate_to";
+		String sql = "SELECT count(*) as row,SUM(rating)/count(*) as rating FROM review  WHERE rate_to = :rate_to and type=0";
 
 		List<Review> list = namedParameterJdbcTemplate.query(sql,
 				getSqlParameterByModel(new Review(review.getRateTo(),review.getRateBy())), new ReviewTripMapper());
 			
 		if(list.size()>0) {
 			Review result=list.get(0);
-			String tripSql = "UPDATE trip SET rating=:rating,total_views=:total_views WHERE id = :id and type=0";
+			String tripSql = "UPDATE trip SET rating=:rating,total_views=:total_views WHERE id = :id ";
 			 namedParameterJdbcTemplate.update(tripSql, getSqlParameterByTripModel(result,review.getRateTo()));
 		}
 		
