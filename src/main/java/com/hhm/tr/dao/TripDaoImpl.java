@@ -250,20 +250,20 @@ public class TripDaoImpl implements TripDao {
 	@Override
 	public BaseResponse createTrip(Trip trip) {
 
-		String sql = "SELECT * FROM trip WHERE status!=0 and trip_name = :trip_name";
+		//String sql = "SELECT * FROM trip WHERE status!=0 and trip_name = :trip_name";
 		BaseResponse res = new BaseResponse();
 		try {
-			List<Trip> list = namedParameterJdbcTemplate.query(sql,
+			/*List<Trip> list = namedParameterJdbcTemplate.query(sql,
 					getSqlParameterByModel(new Trip(trip.getTripName())), new TripMapper());
 			if (list.size() > 0) {
 				res.setMesssageCode("002");
 				res.setMessage("Trip name already exist!");
-			} else {
+			} else {*/
 				insertTrip(trip);
 				res.setMesssageCode("000");
 				res.setMessage("Successful !");
 
-			}
+			//}
 		} catch (Exception e) {
 			System.out.println("Error in create trip => " + e.getMessage());
 			res.setMesssageCode("003");

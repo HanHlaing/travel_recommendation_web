@@ -179,7 +179,12 @@ public class ReviewDaoImpl implements ReviewDao {
 	}
 
 	public Review isExistingReview(Review review) {
-		String sql = "SELECT * FROM review  WHERE rate_by = :rate_by and rate_to = :rate_to and type="+review.getType();
+		String sql ="";
+		
+		if(review.getType()==0)
+		 sql = "SELECT * FROM review  WHERE rate_by = :rate_by and rate_to = :rate_to and type=0";
+		else
+			sql = "SELECT * FROM review  WHERE rate_by = :rate_by and rate_to = :rate_to and type=1";
 
 		List<Review> list = namedParameterJdbcTemplate.query(sql,
 				getSqlParameterByModel(new Review(review.getRateTo(),review.getRateBy())), new ReviewMapper());
@@ -189,7 +194,7 @@ public class ReviewDaoImpl implements ReviewDao {
 	}
 	
 	public void triggerTrip(Review review) {
-		String sql = "SELECT count(*) as row,SUM(rating)/count(*) as rating FROM review  WHERE rate_to = :rate_to and type=0";
+		String sql = "SELECT count(*) as row,SUM(rating)/count(*) as rating FROM review  WHERE rate_to = :rate_to";
 
 		List<Review> list = namedParameterJdbcTemplate.query(sql,
 				getSqlParameterByModel(new Review(review.getRateTo(),review.getRateBy())), new ReviewTripMapper());
