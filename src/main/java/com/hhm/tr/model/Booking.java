@@ -14,6 +14,7 @@ public class Booking {
     String departTo;
     int amount;
     int perAmount;
+    int nightStay;
     String departDate;
     String returnDate;
     String departTime;
@@ -228,6 +229,14 @@ public class Booking {
 
 	public void setTripName(String tripName) {
 		this.tripName = tripName;
+	}
+
+	public int getNightStay() {
+		return nightStay;
+	}
+
+	public void setNightStay(int nightStay) {
+		this.nightStay = nightStay;
 	}
    
 	
