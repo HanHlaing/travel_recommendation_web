@@ -1,13 +1,12 @@
 package com.hhm.tr.service;
 
-import java.util.List;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.hhm.tr.base.BaseResponse;
 import com.hhm.tr.dao.BookingDao;
-import com.hhm.tr.dao.TripDao;
 import com.hhm.tr.model.Booking;
 import com.hhm.tr.model.BookingList;
 
@@ -16,6 +15,11 @@ import com.hhm.tr.model.BookingList;
 public class ApiBookingServiceImpl implements ApiBookingService {
 
 	BookingDao bookingDao;
+	
+	@Autowired
+	public void setTripDao(BookingDao bookingDao) {
+		this.bookingDao = bookingDao;
+	}
 
 	@Override
 	public BaseResponse createBooking(Booking booking) {

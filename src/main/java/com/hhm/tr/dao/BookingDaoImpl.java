@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 import com.hhm.tr.base.BaseResponse;
 import com.hhm.tr.model.Booking;
 import com.hhm.tr.model.BookingList;
-import com.hhm.tr.model.Trip;
 
 @Repository
 public class BookingDaoImpl implements BookingDao {
@@ -32,6 +31,7 @@ public class BookingDaoImpl implements BookingDao {
 		if (booking != null) {
 			parameterSource.addValue("id", booking.getId());		
 			parameterSource.addValue("tour_id",booking.getTourId());
+			parameterSource.addValue("trip_id",booking.getTripId());
 			parameterSource.addValue("user_id",booking.getUserId());
 			parameterSource.addValue("total_seats", booking.getTotalSeats());
 			parameterSource.addValue("total_passenger", booking.getTotalPassenger());
@@ -42,6 +42,7 @@ public class BookingDaoImpl implements BookingDao {
 			parameterSource.addValue("depart_date", booking.getDepartDate());
 			parameterSource.addValue("return_date",booking.getReturnDate());
 			parameterSource.addValue("created_date", booking.getCreatedDate());
+			parameterSource.addValue("modified_date", booking.getModifiedDate());
 			parameterSource.addValue("passenger_name", booking.getPassengerName());
 			parameterSource.addValue("phone", booking.getPhone());
 			parameterSource.addValue("address", booking.getAddress() );
@@ -66,6 +67,7 @@ public class BookingDaoImpl implements BookingDao {
 			Booking booking = new Booking();
 			booking.setId(rs.getInt("id"));
 			booking.setTourId(rs.getInt("tour_id"));
+			booking.setTripId(rs.getInt("trip_id"));
 			booking.setUserId(rs.getInt("user_id"));
 			booking.setTotalSeats(rs.getInt("total_seats"));
 			booking.setTotalPassenger(rs.getInt("total_passenger"));
@@ -140,14 +142,13 @@ public class BookingDaoImpl implements BookingDao {
 	}
 	
 	public void book(Booking booking) {
-		String sql = "INSERT INTO booking(tour_id,user_id,total_seats,total_passenger,depart_from,depart_to,amount,per_amount,depart_date,return_date,passenger_name,phone,"
+		String sql = "INSERT INTO booking(tour_id,trip_id,user_id,total_seats,total_passenger,depart_from,depart_to,amount,per_amount,depart_date,return_date,passenger_name,phone,"
 						+ "address,country,zip_code,city,state,card_type,name_on_card,card_number,expired_date,cvv,tour_name,created_date,modified_date)"
-						+ " VALUES(:tour_id,:user_id,:total_seats,:total_passenger,:depart_from,:depart_to,:amount,:per_amount,:depart_date,:return_date,:passenger_name,:phone," 
+						+ " VALUES(:tour_id,:trip_id,:user_id,:total_seats,:total_passenger,:depart_from,:depart_to,:amount,:per_amount,:depart_date,:return_date,:passenger_name,:phone," 
 						+ ":address,:country,:zip_code,:city,:state,:card_type,:name_on_card,:card_number,:expired_date,:cvv,:tour_name,:created_date,:modified_date)";
 
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(booking));
 
 	}
 
-	
 }
