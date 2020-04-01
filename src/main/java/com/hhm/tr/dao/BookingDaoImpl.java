@@ -73,8 +73,8 @@ public class BookingDaoImpl implements BookingDao {
 			booking.setDepartTo(rs.getString("depart_to"));
 			booking.setAmount(rs.getInt("amount"));
 			booking.setPerAmount(rs.getInt("per_amount"));
-			booking.setDepartDate(rs.getDate("depart_date"));
-			booking.setReturnDate(rs.getDate("return_date"));
+			booking.setDepartDate(rs.getString("depart_date"));
+			booking.setReturnDate(rs.getString("return_date"));
 			booking.setPassengerName(rs.getString("passenger_name"));
 			booking.setPhone(rs.getString("phone"));
 			booking.setAddress(rs.getString("address"));
@@ -88,8 +88,8 @@ public class BookingDaoImpl implements BookingDao {
 			booking.setExpiredDate(rs.getString("expired_date"));
 			booking.setCvv(rs.getString("cvv"));
 			booking.setTourName(rs.getString("tour_name"));
-			booking.setCreatedDate(rs.getDate("created_date"));
-			booking.setModifiedDate(rs.getDate("modified_date"));
+			booking.setCreatedDate(rs.getString("created_date"));
+			booking.setModifiedDate(rs.getString("modified_date"));
 
 			return booking;
 		}

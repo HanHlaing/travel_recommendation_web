@@ -14,11 +14,11 @@ public class Booking {
     String departTo;
     int amount;
     int perAmount;
-    Date departDate;
-    Date returnDate;
-    Date departTime;
-    Date createdDate;
-    Date modifiedDate;
+    String departDate;
+    String returnDate;
+    String departTime;
+    String createdDate;
+    String modifiedDate;
     String passengerName;
     String phone;
     String address;
@@ -108,34 +108,34 @@ public class Booking {
 	public void setPerAmount(int perAmount) {
 		this.perAmount = perAmount;
 	}
-	public Date getDepartDate() {
+	public String getDepartDate() {
 		return departDate;
 	}
-	public void setDepartDate(Date departDate) {
+	public void setDepartDate(String departDate) {
 		this.departDate = departDate;
 	}
-	public Date getReturnDate() {
+	public String getReturnDate() {
 		return returnDate;
 	}
-	public void setReturnDate(Date returnDate) {
+	public void setReturnDate(String returnDate) {
 		this.returnDate = returnDate;
 	}
-	public Date getDepartTime() {
+	public String getDepartTime() {
 		return departTime;
 	}
-	public void setDepartTime(Date departTime) {
+	public void setDepartTime(String departTime) {
 		this.departTime = departTime;
 	}
-	public Date getCreatedDate() {
+	public String getCreatedDate() {
 		return createdDate;
 	}
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
 	}
-	public Date getModifiedDate() {
+	public String getModifiedDate() {
 		return modifiedDate;
 	}
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(String modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
 	public String getPassengerName() {
