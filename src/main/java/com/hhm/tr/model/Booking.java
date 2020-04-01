@@ -32,6 +32,7 @@ public class Booking {
     String expiredDate;
     String cvv;
     String tourName;
+    String tripName;
     
     
     public Booking() {
@@ -219,6 +220,14 @@ public class Booking {
 
 	public void setTourName(String tourName) {
 		this.tourName = tourName;
+	}
+
+	public String getTripName() {
+		return tripName;
+	}
+
+	public void setTripName(String tripName) {
+		this.tripName = tripName;
 	}
    
 	

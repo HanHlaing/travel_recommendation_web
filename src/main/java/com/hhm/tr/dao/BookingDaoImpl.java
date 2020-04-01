@@ -56,6 +56,7 @@ public class BookingDaoImpl implements BookingDao {
 			parameterSource.addValue("expired_date", booking.getExpiredDate() );
 			parameterSource.addValue("cvv", booking.getCvv());
 			parameterSource.addValue("tour_name", booking.getTourName());
+			parameterSource.addValue("trip_name", booking.getTripName());
 			 
 		}
 		return parameterSource;
@@ -90,6 +91,7 @@ public class BookingDaoImpl implements BookingDao {
 			booking.setExpiredDate(rs.getString("expired_date"));
 			booking.setCvv(rs.getString("cvv"));
 			booking.setTourName(rs.getString("tour_name"));
+			booking.setTripName(rs.getString("trip_name"));
 			booking.setCreatedDate(rs.getString("created_date"));
 			booking.setModifiedDate(rs.getString("modified_date"));
 
@@ -143,9 +145,9 @@ public class BookingDaoImpl implements BookingDao {
 	
 	public void book(Booking booking) {
 		String sql = "INSERT INTO booking(tour_id,trip_id,user_id,total_seats,total_passenger,depart_from,depart_to,amount,per_amount,depart_date,return_date,passenger_name,phone,"
-						+ "address,country,zip_code,city,state,card_type,name_on_card,card_number,expired_date,cvv,tour_name,created_date,modified_date)"
+						+ "address,country,zip_code,city,state,card_type,name_on_card,card_number,expired_date,cvv,tour_name,trip_name,created_date,modified_date)"
 						+ " VALUES(:tour_id,:trip_id,:user_id,:total_seats,:total_passenger,:depart_from,:depart_to,:amount,:per_amount,:depart_date,:return_date,:passenger_name,:phone," 
-						+ ":address,:country,:zip_code,:city,:state,:card_type,:name_on_card,:card_number,:expired_date,:cvv,:tour_name,:created_date,:modified_date)";
+						+ ":address,:country,:zip_code,:city,:state,:card_type,:name_on_card,:card_number,:expired_date,:cvv,:tour_name,:trip_name,:created_date,:modified_date)";
 
 		namedParameterJdbcTemplate.update(sql, getSqlParameterByModel(booking));
 
