@@ -103,10 +103,10 @@ public class BookingDaoImpl implements BookingDao {
 	}
 	
 	@Override
-	public BookingList getAllBookingById(int id) {
+	public BookingList getAllBookingById(int tripId) {
 		
-		String sql = "SELECT * FROM booking  WHERE id = :id";
-		List<Booking> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(new Booking(id)), new ReservationMapper());
+		String sql = "SELECT * FROM booking  WHERE trip_id = :id";
+		List<Booking> list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(new Booking(tripId)), new ReservationMapper());
 		BookingList booking = new BookingList();
 		booking.setBookingList(list);
 		booking.setMesssageCode("000");

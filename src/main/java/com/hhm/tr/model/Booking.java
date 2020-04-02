@@ -42,7 +42,7 @@ public class Booking {
     
 	public Booking(int id) {
 		super();
-		this.id = id;
+		this.tripId = id;
 	}
 	
 	public Booking(int userId,String other) {
